@@ -1,0 +1,71 @@
+{
+  "menu": [
+    {
+      "url": "/",
+      "icon": "menu-icon icon-base ti tabler-home",
+      "name": "Inicio",
+      "slug": "inicio"
+    },
+    {
+      "menuHeader": "Catálogos"
+    },
+    {
+      "url": "generators",
+      "icon": "menu-icon icon-base ti tabler-building-factory-2",
+      "name": "Generadores",
+      "slug": "generators"
+    },
+    {
+      "url": "transporters",
+      "icon": "menu-icon icon-base ti tabler-truck-delivery",
+      "name": "Transportistas",
+      "slug": "transporters"
+    },
+    {
+      "url": "wastes",
+      "icon": "menu-icon icon-base ti tabler-recycle",
+      "name": "Residuos",
+      "slug": "wastes"
+    },
+    {
+      "url": "final-destinations",
+      "icon": "menu-icon icon-base ti tabler-map-pin",
+      "name": "Destinos Finales",
+      "slug": "final-destinations"
+    },
+    {
+      "menuHeader": "Documentos"
+    },
+    {
+      "url": "manifests",
+      "icon": "menu-icon icon-base ti tabler-file-text",
+      "name": "Manifiestos",
+      "slug": "manifests"
+    },
+    {
+      "url": "remisions",
+      "icon": "menu-icon icon-base ti tabler-receipt",
+      "name": "Remisiones",
+      "slug": "remisions"
+    },
+    {
+      "url": "withdrawals",
+      "icon": "menu-icon icon-base ti tabler-file-invoice",
+      "name": "Retiros",
+      "slug": "withdrawals"
+    },
+    {
+      "name": "Reportes",
+      "icon": "menu-icon icon-base ti tabler-chart-bar",
+      "slug": "reportes",
+      "submenu": [
+        {
+          "url": "withdrawals",
+          "name": "Reporte SAMA",
+          "slug": "withdrawals",
+          "icon": "menu-icon icon-base ti tabler-file-certificate"
+        }
+      ]
+    }
+  ]
+}
