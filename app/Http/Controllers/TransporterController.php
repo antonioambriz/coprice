@@ -112,7 +112,7 @@ class TransporterController extends Controller
                     'contact_person'       => $t->contact_person,
                     'email_remissions'     => $t->email_remissions,
                     'address'              => $t->address,
-                    'activo'               => $t->activo
+                    'status'               => $t->activo
                 ];
             })
         ]);

@@ -82,6 +82,18 @@ document.addEventListener('DOMContentLoaded', function (e) {
       order: [[1, 'asc']], // Ordenar por nombre de empresa
       pageLength: 25,
       processing: true,
+      language: {
+        emptyTable:     'No hay datos disponibles',
+        info:           'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        infoEmpty:      'Sin registros para mostrar',
+        infoFiltered:   '(filtrado)',
+        lengthMenu:     'Mostrar _MENU_ registros',
+        loadingRecords: 'Cargando...',
+        processing:     'Procesando...',
+        search:         'Buscar:',
+        zeroRecords:    'No se encontraron registros',
+        paginate:       { first: 'Primero', last: 'Último', next: 'Siguiente', previous: 'Anterior' }
+      },
       columns: [
         { data: 'id', width: '5%', className: 'text-center' },
         { data: 'company_name', width: '30%' },
