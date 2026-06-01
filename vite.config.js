@@ -15,7 +15,7 @@ function GetFilesArray(query) {
 }
 
 // Page JS Files
-const pageJsFiles = GetFilesArray('resources/assets/js/*.js');
+const pageJsFiles = GetFilesArray('resources/assets/js/**/*.js');
 
 // Processing Vendor JS Files
 const vendorJsFiles = GetFilesArray('resources/assets/vendor/js/*.js');
