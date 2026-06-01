@@ -1,0 +1,5 @@
+/* Logo: limitar ancho cuando el menú está colapsado */
+.layout-menu-collapsed #layout-menu .app-brand-logo {
+  max-width: 40px;
+  overflow: hidden;
+}
