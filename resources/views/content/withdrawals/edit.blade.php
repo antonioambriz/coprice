@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Nuevo Retiro - Coprice')
+@section('title', 'Editar Retiro ' . $withdrawal->folio_interno . ' - Coprice')
 
 @section('vendor-style')
   @vite([
@@ -45,24 +45,25 @@
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
       <li class="breadcrumb-item"><a href="{{ route('withdrawals.index') }}">Bitácora de Retiros</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
-      <li class="breadcrumb-item active">Nuevo Retiro</li>
+      <li class="breadcrumb-item"><a href="{{ route('withdrawals.show', $withdrawal) }}">{{ $withdrawal->folio_interno }}</a>
+        <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
+      <li class="breadcrumb-item active">Editar</li>
     </ol>
   </nav>
 
-  <form action="{{ route('withdrawals.store') }}" method="POST" id="withdrawalForm">
+  <form action="{{ route('withdrawals.update', $withdrawal) }}" method="POST" id="withdrawalForm">
     @csrf
+    @method('PUT')
     <div class="row g-4">
 
       {{-- COLUMNA PRINCIPAL --}}
       <div class="col-lg-9">
 
-        {{-- ERRORES --}}
         @if ($errors->any())
           <div class="alert alert-danger mb-3">
             <ul class="mb-0">@foreach ($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
           </div>
         @endif
-
 
         <div class="card shadow-none border">
           <div class="card-body">
@@ -73,42 +74,48 @@
               <div class="col-md-3">
                 <label class="form-label">Folio</label>
                 <input type="text" name="folio_interno" class="form-control fw-semibold text-primary"
-                  value="{{ $nuevoFolio }}" readonly>
+                  value="{{ old('folio_interno', $withdrawal->folio_interno) }}" readonly>
               </div>
               <div class="col-md-3">
                 <label class="form-label">Fecha Salida Generador</label>
-                <input type="text" name="departure_date" class="form-control flatpickr">
+                <input type="text" name="departure_date" class="form-control flatpickr"
+                  value="{{ old('departure_date', $withdrawal->departure_date?->format('Y-m-d H:i')) }}">
               </div>
               <div class="col-md-3">
                 <label class="form-label">Folio Báscula</label>
-                <input type="text" name="ticket_externo" class="form-control" placeholder="Ej. 30005">
+                <input type="text" name="ticket_externo" class="form-control" placeholder="Ej. 30005"
+                  value="{{ old('ticket_externo', $withdrawal->ticket_externo) }}">
               </div>
               <div class="col-md-3">
                 <label class="form-label">Folio Salida</label>
                 <input type="text" name="folio_salida" class="form-control" placeholder="Folio de salida"
-                  value="{{ old('folio_salida') }}">
+                  value="{{ old('folio_salida', $withdrawal->folio_salida) }}">
               </div>
             </div>
+
             <div class="row g-3 mb-4">
               <div class="col-md-3"></div>
               <div class="col-md-3 d-flex flex-column justify-content-end">
                 <div class="form-check form-switch mb-1">
                   <input class="form-check-input" type="checkbox" name="requires_transport_equipment"
-                    id="requiresTransportEquipment" value="1" {{ old('requires_transport_equipment') ? 'checked' : '' }}>
+                    id="requiresTransportEquipment" value="1"
+                    {{ old('requires_transport_equipment', $withdrawal->requires_transport_equipment) ? 'checked' : '' }}>
                   <label class="form-check-label text-muted" for="requiresTransportEquipment">Requiere Equipo</label>
                 </div>
               </div>
               <div class="col-md-3 d-flex flex-column justify-content-end">
                 <div class="form-check form-switch mb-1">
                   <input class="form-check-input" type="checkbox" name="requires_manifest"
-                    id="requiresManifest" value="1" {{ old('requires_manifest') ? 'checked' : '' }}>
+                    id="requiresManifest" value="1"
+                    {{ old('requires_manifest', $withdrawal->requires_manifest) ? 'checked' : '' }}>
                   <label class="form-check-label text-muted" for="requiresManifest">Requiere Manifiesto</label>
                 </div>
               </div>
               <div class="col-md-3 d-flex flex-column justify-content-end">
                 <div class="form-check form-switch mb-1">
                   <input class="form-check-input" type="checkbox" name="is_estimated_weight"
-                    id="isEstimatedWeight" value="1" {{ old('is_estimated_weight') ? 'checked' : '' }}>
+                    id="isEstimatedWeight" value="1"
+                    {{ old('is_estimated_weight', $withdrawal->is_estimated_weight) ? 'checked' : '' }}>
                   <label class="form-check-label text-muted" for="isEstimatedWeight">Peso Asumido</label>
                 </div>
               </div>
@@ -128,7 +135,7 @@
                       data-has-sub="{{ $g->has_sub_generators ? '1' : '0' }}"
                       data-preferred-transporter="{{ $g->preferred_transporter_id }}"
                       data-requires-manifest="{{ $g->requires_manifest ? '1' : '0' }}"
-                      {{ old('generator_id') == $g->id ? 'selected' : '' }}>
+                      {{ old('generator_id', $withdrawal->generator_id) == $g->id ? 'selected' : '' }}>
                       {{ $g->company_name }}
                     </option>
                   @endforeach
@@ -149,21 +156,19 @@
                   <option value=""></option>
                   @foreach ($transporters as $t)
                     <option value="{{ $t->id }}"
-                      {{ $t->company_name === 'COPRICE' ? 'selected' : '' }}
-                      {{ old('transporter_id') == $t->id ? 'selected' : '' }}>
+                      {{ old('transporter_id', $withdrawal->transporter_id) == $t->id ? 'selected' : '' }}>
                       {{ $t->company_name }}
                     </option>
                   @endforeach
                 </select>
                 <div id="transportEquipmentRow" class="mt-2" style="display:none;">
-                  <label class="form-label">Equipo de Transporte</label>
+                  <label class="form-label">Vehículo / Equipo de Transporte</label>
                   <select name="transport_equipment_id" id="transportEquipmentSelect" class="form-select">
                     <option value="">— Seleccionar equipo —</option>
                   </select>
                 </div>
               </div>
             </div>
-
 
           </div>
         </div>
@@ -204,18 +209,17 @@
             <div class="mb-3">
               <label class="form-label">Fecha Recepción</label>
               <input type="text" name="reception_date" id="receptionDate" class="form-control flatpickr"
-                value="{{ now()->format('Y-m-d H:i') }}">
+                value="{{ old('reception_date', $withdrawal->reception_date?->format('Y-m-d H:i')) }}">
             </div>
             <div class="mb-3">
               <label class="form-label">Etapa de manejo integral</label>
               <select name="treatment_stage" class="form-select">
-                <option value="TRATAMIENTO"    {{ old('treatment_stage', 'TRATAMIENTO') === 'TRATAMIENTO'    ? 'selected' : '' }}>TRATAMIENTO</option>
-                <option value="TRANSPORTE"     {{ old('treatment_stage') === 'TRANSPORTE'     ? 'selected' : '' }}>TRANSPORTE</option>
-                <option value="CONFINAMIENTO"  {{ old('treatment_stage') === 'CONFINAMIENTO'  ? 'selected' : '' }}>CONFINAMIENTO</option>
-                <option value="RECICLAJE"      {{ old('treatment_stage') === 'RECICLAJE'      ? 'selected' : '' }}>RECICLAJE</option>
-                <option value="REUSO"          {{ old('treatment_stage') === 'REUSO'          ? 'selected' : '' }}>REUSO</option>
-                <option value="COPROCESAMIENTO"{{ old('treatment_stage') === 'COPROCESAMIENTO'? 'selected' : '' }}>COPROCESAMIENTO</option>
-                <option value="INCINERACIÓN"   {{ old('treatment_stage') === 'INCINERACIÓN'   ? 'selected' : '' }}>INCINERACIÓN</option>
+                @foreach(['TRATAMIENTO','TRANSPORTE','CONFINAMIENTO','RECICLAJE','REUSO','COPROCESAMIENTO','INCINERACIÓN'] as $stage)
+                  <option value="{{ $stage }}"
+                    {{ old('treatment_stage', $withdrawal->treatment_stage) === $stage ? 'selected' : '' }}>
+                    {{ $stage }}
+                  </option>
+                @endforeach
               </select>
             </div>
             <div class="mb-3">
@@ -223,23 +227,30 @@
               <select name="final_destination_id" class="form-select">
                 <option value="">— Sin especificar —</option>
                 @foreach($finalDestinations as $fd)
-                  <option value="{{ $fd->id }}" {{ old('final_destination_id') == $fd->id ? 'selected' : '' }}>
+                  <option value="{{ $fd->id }}"
+                    {{ old('final_destination_id', $withdrawal->final_destination_id) == $fd->id ? 'selected' : '' }}>
                     {{ $fd->display_name }}
                   </option>
                 @endforeach
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Observaciones</label>
-              <textarea name="observaciones" class="form-control" rows="3" placeholder="Notas u observaciones...">{{ old('observaciones') }}</textarea>
+              <label class="form-label">Estatus de Pago</label>
+              <select name="payment_status" class="form-select">
+                <option value="PENDIENTE" {{ old('payment_status', $withdrawal->payment_status) === 'PENDIENTE' ? 'selected' : '' }}>PENDIENTE</option>
+                <option value="PAGADO"    {{ old('payment_status', $withdrawal->payment_status) === 'PAGADO'    ? 'selected' : '' }}>PAGADO</option>
+              </select>
             </div>
-            <input type="hidden" name="payment_status" value="PENDIENTE">
+            <div class="mb-3">
+              <label class="form-label">Observaciones</label>
+              <textarea name="observaciones" class="form-control" rows="3" placeholder="Notas u observaciones...">{{ old('observaciones', $withdrawal->observaciones) }}</textarea>
+            </div>
           </div>
           <div class="card-footer bg-transparent">
             <button type="submit" class="btn btn-primary w-100">
-              <i class="ti tabler-device-floppy me-1"></i> Guardar Retiro
+              <i class="ti tabler-device-floppy me-1"></i> Guardar Cambios
             </button>
-            <a href="{{ route('withdrawals.index') }}" class="btn btn-outline-secondary w-100 mt-2">
+            <a href="{{ route('withdrawals.show', $withdrawal) }}" class="btn btn-outline-secondary w-100 mt-2">
               Cancelar
             </a>
           </div>
@@ -270,28 +281,28 @@
         </div>
       </td>
       <td>
-        <select name="items[__INDEX__][container_type]" class="form-select form-select-sm container-type-sel">
+        <select name="items[__INDEX__][container_type]" class="form-select form-select-sm">
           <option value="">—</option>
-          <option value="Contenedor">Contenedor</option>
-          <option value="Contenedor metálico">Contenedor metálico</option>
-          <option value="Contenedor cerrado">Contenedor cerrado</option>
-          <option value="Pipa">Pipa</option>
-          <option value="Estiba">Estiba</option>
-          <option value="Góndola">Góndola</option>
-          <option value="Plataforma">Plataforma</option>
-          <option value="Roll off">Roll off</option>
-          <option value="Saco">Saco</option>
-          <option value="Tambos">Tambos</option>
-          <option value="Tanque">Tanque</option>
-          <option value="Tolva">Tolva</option>
-          <option value="Tote">Tote</option>
-          <option value="Vactor">Vactor</option>
+          <option value="VACTOR">VACTOR</option>
+          <option value="TAMBO">TAMBO</option>
+          <option value="CONTENEDOR">CONTENEDOR</option>
+          <option value="TANQUE">TANQUE</option>
+          <option value="COSTAL">COSTAL</option>
+          <option value="CAJA">CAJA</option>
+          <option value="ESTIBA">ESTIBA</option>
+          <option value="TOLVA">TOLVA</option>
+          <option value="OTRO">OTRO</option>
         </select>
       </td>
       <td>
-        <select name="items[__INDEX__][container_capacity]" class="form-select form-select-sm container-capacity-sel" disabled>
-          <option value="">—</option>
-        </select>
+        <div class="input-group input-group-sm">
+          <input type="number" name="items[__INDEX__][container_capacity]" class="form-control" placeholder="Cap.">
+          <select name="items[__INDEX__][container_unit]" class="form-select" style="max-width:62px;">
+            <option value="LT">LT</option>
+            <option value="KG">KG</option>
+            <option value="M3">M3</option>
+          </select>
+        </div>
       </td>
       <td class="text-center">
         <button type="button" class="btn btn-sm btn-icon btn-text-secondary btn-remove">
@@ -300,11 +311,25 @@
       </td>
     </tr>
   </script>
+
+  {{-- Datos existentes para JS --}}
+  @php
+    $existingItems = $withdrawal->items->map(fn($i) => [
+      'waste_id'           => $i->waste_id,
+      'quantity'           => $i->quantity,
+      'unit'               => $i->unit,
+      'container_type'     => $i->container_type,
+      'container_capacity' => $i->container_capacity,
+    ]);
+  @endphp
+  <script>
+    var baseUrl             = "{{ url('/') }}/";
+    var existingItems       = @json($existingItems);
+    var existingSubGenId    = {{ $withdrawal->sub_generator_id ?? 'null' }};
+    var existingTransportId = {{ $withdrawal->transport_equipment_id ?? 'null' }};
+  </script>
 @endsection
 
 @section('page-script')
-  <script>
-    var baseUrl = "{{ url('/') }}/";
-  </script>
-  @vite(['resources/assets/js/withdrawals/create.js'])
+  @vite(['resources/assets/js/withdrawals/edit.js'])
 @endsection

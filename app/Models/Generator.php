@@ -16,12 +16,14 @@ class Generator extends Model
         'address',
         'status',
         'has_sub_generators',
+        'requires_manifest',
         'preferred_transporter_id',
     ];
 
     protected $casts = [
         'status'             => 'boolean',
         'has_sub_generators' => 'boolean',
+        'requires_manifest'  => 'boolean',
     ];
 
     public function preferredTransporter()

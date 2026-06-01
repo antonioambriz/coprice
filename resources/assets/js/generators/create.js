@@ -11,14 +11,19 @@ $(function () {
     body.append(template);
   }
 
+  const manifestToggle = $('#requiresManifestToggle');
+
   function applyToggle(checked) {
     if (checked) {
       section.show();
+      manifestToggle.hide();
       if (body.find('tr').length === 0) addRow();
     } else {
       section.hide();
+      manifestToggle.show();
     }
   }
+
 
   applyToggle(toggle.is(':checked'));
 

@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
       { data: 'manifest' },
       { data: 'is_estimated_weight' },
       { data: 'status' },
+      { data: 'user_name' },
       { data: null, orderable: false, searchable: false },
     ],
     columnDefs: [
@@ -96,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
       },
       {
-        targets: 6, // Peso estimado
+        targets: 6, // Peso asumido
         render: function (data) {
           return data
             ? '<span class="badge bg-label-warning">Estimado</span>'
@@ -164,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const cloneRow = thead.querySelector('tr').cloneNode(true);
   thead.appendChild(cloneRow);
   thead.querySelectorAll('tr:nth-child(2) th').forEach((th, i) => {
-    if (i === 8) {
+    if (i === 9) {
       th.innerHTML =
         '<div class="text-center"><button class="btn btn-sm btn-label-secondary btn-icon" id="btn-reset-filters"><i class="ti tabler-filter-off"></i></button></div>';
       th.querySelector('#btn-reset-filters').addEventListener('click', () => {

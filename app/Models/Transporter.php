@@ -30,4 +30,9 @@ class Transporter extends Model
     {
         return $this->hasMany(TransportEquipment::class);
     }
+
+    public function wastePrices()
+    {
+        return $this->hasMany(WastePrice::class);
+    }
 }

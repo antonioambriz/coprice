@@ -17,6 +17,14 @@
   ])
 @endsection
 
+@section('page-style')
+<style>
+  #equipmentsTable_wrapper > .row:not(.dt-layout-table) {
+    padding-inline: 1.5rem;
+  }
+</style>
+@endsection
+
 @section('content')
   <h4 class="fw-bold py-3 mb-4">
     <span class="text-muted fw-light">Transportistas /</span> Editar: {{ $transporter->company_name }}
@@ -101,9 +109,12 @@
               </div>
             </div>
 
-            <div class="mt-2">
-              <button type="submit" class="btn btn-primary me-2">Actualizar Cambios</button>
+            <div class="mt-2 d-flex gap-2 flex-wrap align-items-center">
+              <button type="submit" class="btn btn-primary">Actualizar Cambios</button>
               <a href="{{ route('transporters.index') }}" class="btn btn-label-secondary">Cancelar</a>
+              <a href="{{ route('waste-prices.transporter', $transporter) }}" class="btn btn-outline-primary ms-auto">
+                <i class="ti tabler-currency-dollar me-1"></i> Precios por Residuo
+              </a>
             </div>
           </form>
         </div>

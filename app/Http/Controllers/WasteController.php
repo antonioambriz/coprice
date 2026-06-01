@@ -37,17 +37,18 @@ class WasteController extends Controller
         ]);
 
         $validated = $request->validate([
-            'description'   => 'required|string|max:255',
-            'waste_code'    => 'nullable|string|max:50',
-            'unit'          => 'required|string',
-            'default_price' => 'nullable|numeric|min:0',
-            'is_hazardous'  => 'required|boolean',
-            'notes'         => 'nullable|string'
+            'description'    => 'required|string|max:255',
+            'waste_code'     => 'nullable|string|max:50',
+            'unit'           => 'required|string',
+            'physical_state' => 'nullable|in:Sólido,Líquido,Semisólido',
+            'packaging_type' => 'nullable|in:RR,RNV',
+            'default_price'  => 'nullable|numeric|min:0',
+            'is_hazardous'   => 'required|boolean',
+            'notes'          => 'nullable|string',
         ]);
 
-        // Estándar Citio: Forzamos MAYÚSCULAS en descripción y código
         $validated['description'] = strtoupper($request->description);
-        $validated['waste_code'] = $request->waste_code ? strtoupper($request->waste_code) : null;
+        $validated['waste_code']  = $request->waste_code ? strtoupper($request->waste_code) : null;
 
         Waste::create($validated);
 
@@ -73,16 +74,18 @@ class WasteController extends Controller
         ]);
 
         $validated = $request->validate([
-            'description'   => 'required|string|max:255',
-            'waste_code'    => 'nullable|string|max:50',
-            'unit'          => 'required|string',
-            'default_price' => 'nullable|numeric|min:0',
-            'is_hazardous'  => 'required|boolean',
-            'notes'         => 'nullable|string'
+            'description'    => 'required|string|max:255',
+            'waste_code'     => 'nullable|string|max:50',
+            'unit'           => 'required|string',
+            'physical_state' => 'nullable|in:Sólido,Líquido,Semisólido',
+            'packaging_type' => 'nullable|in:RR,RNV',
+            'default_price'  => 'nullable|numeric|min:0',
+            'is_hazardous'   => 'required|boolean',
+            'notes'          => 'nullable|string',
         ]);
 
         $validated['description'] = strtoupper($request->description);
-        $validated['waste_code'] = $request->waste_code ? strtoupper($request->waste_code) : null;
+        $validated['waste_code']  = $request->waste_code ? strtoupper($request->waste_code) : null;
 
         $waste->update($validated);
 
@@ -114,13 +117,16 @@ class WasteController extends Controller
         return response()->json([
             'data' => $wastes->map(function($waste) {
                 return [
-                    'id'            => $waste->id,
-                    'description'   => $waste->description,
-                    'waste_code'    => $waste->waste_code ?? 'N/A',
-                    'unit'          => $waste->unit,
-                    'default_price' => '$' . number_format($waste->default_price, 2),
-                    'is_hazardous'  => (bool)$waste->is_hazardous,
-                    'activo'        => true // Mantenemos el borde success para el ID en JS
+                    'id'             => $waste->id,
+                    'waste_code'     => $waste->waste_code ?? '—',
+                    'description'    => $waste->description,
+                    'physical_state' => $waste->physical_state ?? '—',
+                    'stage'          => $waste->stage ?? '—',
+                    'unit'           => $waste->unit,
+                    'packaging_type' => $waste->packaging_type ?? '—',
+                    'default_price'  => '$' . number_format($waste->default_price, 2),
+                    'is_hazardous'   => (bool)$waste->is_hazardous,
+                    'activo'         => true,
                 ];
             })
         ]);

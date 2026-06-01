@@ -16,6 +16,7 @@ class Withdrawal extends Model
         'folio_interno',
         'ticket_externo',
         'folio_salida',
+        'user_id',
         'generator_id',
         'sub_generator_id',
         'transporter_id',
@@ -40,6 +41,11 @@ class Withdrawal extends Model
         'requires_manifest'            => 'boolean',
         'requires_transport_equipment' => 'boolean',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 
     public function generator()
     {

@@ -33,8 +33,10 @@
         <thead>
           <tr>
             <th>Id</th>
+            <th>Clave</th>
             <th>Descripción</th>
-            <th>Código</th>
+            <th class="text-center">Estado físico</th>
+            <th class="text-center">Clasificación</th>
             <th class="text-center">Unidad</th>
             <th class="text-center">Precio Base</th>
             <th class="text-center">Peligroso</th>
@@ -44,8 +46,10 @@
         <tfoot>
           <tr>
             <th>Id</th>
+            <th>Clave</th>
             <th>Descripción</th>
-            <th>Código</th>
+            <th class="text-center">Estado físico</th>
+            <th class="text-center">Clasificación</th>
             <th class="text-center">Unidad</th>
             <th class="text-center">Precio Base</th>
             <th class="text-center">Peligroso</th>

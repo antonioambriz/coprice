@@ -8,19 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('remisions', function (Blueprint $table) {
+        Schema::create('manifests', function (Blueprint $table) {
             $table->id();
-            $table->string('remision_number')->nullable();
-
+            $table->string('manifest_number')->nullable();
+            $table->date('emission_date')->nullable();
             $table->foreignId('generator_id')->constrained();
             $table->foreignId('sub_generator_id')->nullable()->constrained()->nullOnDelete();
-
-            $table->date('emission_date')->nullable();
-
-            $table->string('status')->default('BORRADOR'); // BORRADOR, ENVIADA, PAGADA, CANCELADA
-
-            $table->decimal('total', 12, 2)->default(0);
-
+            $table->date('period_start')->nullable();
+            $table->date('period_end')->nullable();
+            $table->boolean('generated')->default(false);
             $table->text('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -29,6 +25,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('remisions');
+        Schema::dropIfExists('manifests');
     }
 };

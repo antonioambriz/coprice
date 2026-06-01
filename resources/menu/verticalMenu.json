@@ -16,6 +16,12 @@
       "slug": "generators"
     },
     {
+      "url": "clients",
+      "icon": "menu-icon icon-base ti tabler-briefcase",
+      "name": "Clientes",
+      "slug": "clients"
+    },
+    {
       "url": "transporters",
       "icon": "menu-icon icon-base ti tabler-truck-delivery",
       "name": "Transportistas",

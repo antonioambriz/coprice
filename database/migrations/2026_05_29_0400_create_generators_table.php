@@ -14,7 +14,10 @@ return new class extends Migration
             $table->string('rfc', 13)->nullable();
             $table->text('address')->nullable();
             $table->boolean('status')->default(true);
-            $table->softDeletes(); // Esto crea la columna deleted_at
+            $table->boolean('has_sub_generators')->default(false);
+            $table->boolean('requires_manifest')->default(false);
+            $table->foreignId('preferred_transporter_id')->nullable()->constrained('transporters')->nullOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

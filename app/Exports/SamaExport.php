@@ -119,7 +119,7 @@ class SamaExport implements WithEvents, ShouldAutoSize
                     $sheet->fromArray([
                         $item->waste?->description ?? '—',
                         $fecha,
-                        $item->physical_state ?? '',
+                        $item->waste?->physical_state ?? '',
                         $item->quantity,
                         $item->unit,
                         $item->container_type ?? '',

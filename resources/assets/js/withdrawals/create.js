@@ -12,6 +12,7 @@ $(function () {
   const equipmentSwitch   = $('#requiresTransportEquipment');
   const equipmentRow      = $('#transportEquipmentRow');
   const equipmentSel      = $('#transportEquipmentSelect');
+  const manifestSwitch    = $('#requiresManifest');
 
   // ─── FLATPICKR ───────────────────────────────────────────────
   const fpConfig = {
@@ -36,7 +37,7 @@ $(function () {
     $(selector).each(function () {
       $(this).select2({
         placeholder: 'Seleccionar...',
-        dropdownParent: parent || $(this).parent(),
+        dropdownParent: parent || $('body'),
         width: '100%',
       });
     });
@@ -50,6 +51,7 @@ $(function () {
     const hasSub               = selected.data('has-sub') === 1 || selected.data('has-sub') === '1';
     const genId                = $(this).val();
     const preferredTransporter = selected.data('preferred-transporter');
+    const genRequiresManifest  = selected.data('requires-manifest') === 1 || selected.data('requires-manifest') === '1';
 
     // Auto-seleccionar transportista preferido
     if (preferredTransporter) {
@@ -75,18 +77,27 @@ $(function () {
         subGenRow.show();
       });
     } else {
+      // Sin sub-generadores: heredar valor del generador
+      manifestSwitch.prop('checked', genRequiresManifest);
       subGenRow.hide();
     }
   });
 
-  // Mostrar peso asumido al seleccionar sub-generador
+  // Al seleccionar sub-generador: su requires_manifest tiene prioridad
   subGenSel.on('change', function () {
-    const assumed = $(this).find(':selected').data('assumed');
+    const selected = $(this).find(':selected');
+    const assumed  = selected.data('assumed');
+    const subRequiresManifest = selected.data('requires-manifest');
+
     if (assumed) {
       assumedValue.text(Number(assumed).toLocaleString('es-MX'));
       assumedInfo.removeClass('d-none');
     } else {
       assumedInfo.addClass('d-none');
+    }
+
+    if (selected.val()) {
+      manifestSwitch.prop('checked', subRequiresManifest === 1 || subRequiresManifest === '1');
     }
   });
 
@@ -123,6 +134,39 @@ $(function () {
 
   // Si viene marcado por old() al recargar con errores
   if (equipmentSwitch.is(':checked')) toggleEquipmentRow();
+
+  // ─── CAPACIDADES POR TIPO DE ENVASADO ────────────────────────
+  const CONTAINER_CAPACITIES = {
+    'Contenedor':          [1, 2, 5, 7, 8, 10, 12, 14, 18, 21, 30],
+    'Contenedor metálico': [12, 21],
+    'Contenedor cerrado':  [5],
+    'Pipa':                [10, 15, 20, 31],
+    'Estiba':              [7.5],
+    'Góndola':             [30],
+    'Plataforma':          [12],
+    'Roll off':            [30],
+    'Saco':                [0.5],
+    'Tambos':              [0.2],
+    'Tanque':              [10, 20],
+    'Tolva':               [15, 16],
+    'Tote':                [1],
+    'Vactor':              [5, 9, 10, 20, 30],
+  };
+
+  $(document).on('change', '.container-type-sel', function () {
+    const type   = $(this).val();
+    const capSel = $(this).closest('tr').find('.container-capacity-sel');
+    capSel.empty().append('<option value="">—</option>');
+
+    if (type && CONTAINER_CAPACITIES[type]) {
+      CONTAINER_CAPACITIES[type].forEach(cap => {
+        capSel.append($('<option>', { value: cap, text: cap }));
+      });
+      capSel.prop('disabled', false);
+    } else {
+      capSel.prop('disabled', true);
+    }
+  });
 
   // ─── FILAS DE RESIDUOS ────────────────────────────────────────
   window.addRow = function () {

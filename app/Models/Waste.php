@@ -12,11 +12,14 @@ class Waste extends Model
 
     protected $fillable = [
         'description',
-        'waste_code',    // <--- Verifica que esta línea exista
+        'waste_code',
         'unit',
+        'physical_state',
+        'stage',
+        'packaging_type',
         'default_price',
         'is_hazardous',
-        'notes'
+        'notes',
     ];
 
     protected $casts = [

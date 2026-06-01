@@ -32,6 +32,64 @@ $configData = Helper::appClasses();
 
 @section('content')
 <div class="row g-6">
+
+  {{-- WIDGET PETAR --}}
+  @if(isset($petarWidget) && $petarWidget['found'])
+  <div class="col-12">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header d-flex justify-content-between align-items-center py-3">
+        <div>
+          <h5 class="card-title mb-0">
+            <i class="ti tabler-building-factory-2 me-2 text-primary"></i>
+            Importe Acumulado — {{ $petarWidget['name'] }}
+          </h5>
+          <small class="text-muted">Retiros pendientes de remisionar · precio por kg según acuerdo</small>
+        </div>
+        <div class="text-end">
+          <div class="text-muted small">Total acumulado</div>
+          <h4 class="mb-0 text-primary fw-bold">${{ number_format($petarWidget['total'], 2) }}</h4>
+        </div>
+      </div>
+      @if(count($petarWidget['rows']) > 0)
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-sm mb-0">
+            <thead class="table-light">
+              <tr>
+                <th class="ps-4">Residuo</th>
+                <th class="text-end">Toneladas acumuladas</th>
+                <th class="text-end pe-4">Importe</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($petarWidget['rows'] as $row)
+              <tr>
+                <td class="ps-4">{{ $row['waste'] }}</td>
+                <td class="text-end">{{ number_format($row['tons'], 4) }}</td>
+                <td class="text-end pe-4 fw-semibold">${{ number_format($row['importe'], 2) }}</td>
+              </tr>
+              @endforeach
+            </tbody>
+            <tfoot class="table-light">
+              <tr>
+                <td colspan="2" class="ps-4 fw-semibold">Total</td>
+                <td class="text-end pe-4 fw-bold text-primary">${{ number_format($petarWidget['total'], 2) }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      @else
+      <div class="card-body text-center text-muted py-4">
+        <i class="ti tabler-inbox icon-lg mb-2 d-block"></i>
+        Sin retiros pendientes de remisionar.
+      </div>
+      @endif
+    </div>
+  </div>
+  {{-- / WIDGET PETAR --}}
+  @endif
+
   <!-- Website Analytics -->
   <div class="col-xl-6 col">
     <div class="swiper-container swiper-container-horizontal swiper swiper-card-advance-bg"

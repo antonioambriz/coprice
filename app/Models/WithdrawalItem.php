@@ -17,8 +17,6 @@ class WithdrawalItem extends Model
         'waste_id',
         'quantity',
         'unit',
-        'physical_state',
-        'packaging_type',
         'container_capacity',
         'container_type',
         'unit_price',

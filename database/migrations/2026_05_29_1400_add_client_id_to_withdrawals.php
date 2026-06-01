@@ -9,17 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('withdrawals', function (Blueprint $table) {
-            $table->dropColumn('final_destination');
-            $table->foreignId('final_destination_id')->nullable()->constrained('final_destinations')->nullOnDelete()->after('treatment_stage');
+            $table->foreignId('client_id')->nullable()->constrained()->nullOnDelete()->after('generator_id');
         });
     }
 
     public function down(): void
     {
         Schema::table('withdrawals', function (Blueprint $table) {
-            $table->dropForeign(['final_destination_id']);
-            $table->dropColumn('final_destination_id');
-            $table->string('final_destination')->nullable()->after('treatment_stage');
+            $table->dropForeign(['client_id']);
+            $table->dropColumn('client_id');
         });
     }
 };

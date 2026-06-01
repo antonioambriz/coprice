@@ -80,20 +80,22 @@ document.addEventListener('DOMContentLoaded', function (e) {
   if (dt_filter_table) {
     dt_filter = new DataTable(dt_filter_table, {
       ajax: baseUrl + 'wastes/get-data',
-      order: [[1, 'asc']], // Ordenar por Descripción
+      order: [[2, 'asc']],
       pageLength: 25,
       processing: true,
       columns: [
-        { data: 'id', width: '2%', className: 'text-center' },
-        { data: 'description', width: '30%' },
-        { data: 'waste_code', width: '15%' },
-        { data: 'unit', width: '10%', className: 'text-center' },
-        { data: 'default_price', width: '10%', className: 'text-center' },
-        { data: 'is_hazardous', width: '10%', className: 'text-center' },
-        { data: null, width: '10%', className: 'text-center', orderable: false, searchable: false }
+        { data: 'id',             width: '3%',  className: 'text-center' },
+        { data: 'waste_code',     width: '8%',  className: 'text-center' },
+        { data: 'description',    width: '28%' },
+        { data: 'physical_state', width: '12%', className: 'text-center' },
+        { data: 'stage',          width: '14%', className: 'text-center' },
+        { data: 'unit',           width: '7%',  className: 'text-center' },
+        { data: 'default_price',  width: '9%',  className: 'text-center' },
+        { data: 'is_hazardous',   width: '9%',  className: 'text-center' },
+        { data: null,             width: '8%',  className: 'text-center', orderable: false, searchable: false }
       ],
       columnDefs: [
-        // ID con borde lateral (Homologado)
+        // ID con borde lateral
         {
           targets: 0,
           render: function (data, type, full) {
@@ -106,14 +108,14 @@ document.addEventListener('DOMContentLoaded', function (e) {
         },
         // Descripción en Negrita
         {
-          targets: 1,
+          targets: 2,
           render: function (data) {
             return `<span class="text-body fw-medium">${data}</span>`;
           }
         },
         // Badge para Peligroso
         {
-          targets: 5,
+          targets: 7,
           render: function (data) {
             const state = data ? 'bg-label-danger' : 'bg-label-success';
             const text = data ? 'PELIGROSO' : 'ESTÁNDAR';

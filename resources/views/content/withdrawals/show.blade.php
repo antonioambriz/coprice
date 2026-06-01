@@ -34,8 +34,11 @@
               </span>
             </div>
             <div class="d-flex gap-2 align-items-center">
+              <a href="{{ route('withdrawals.edit', $withdrawal) }}" class="btn btn-sm btn-outline-primary">
+                <i class="ti tabler-pencil me-1"></i> Editar
+              </a>
               @if($withdrawal->is_estimated_weight)
-                <span class="badge bg-label-warning">Peso Estimado</span>
+                <span class="badge bg-label-warning">Peso Asumido</span>
               @else
                 <span class="badge bg-label-success">Peso Real</span>
               @endif
@@ -106,8 +109,6 @@
             <thead>
               <tr>
                 <th style="font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#6c757d;font-weight:600;border-bottom:2px solid #e9ecef;background:transparent;width:35%">Residuo</th>
-                <th style="font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#6c757d;font-weight:600;border-bottom:2px solid #e9ecef;background:transparent">Estado Físico</th>
-                <th style="font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#6c757d;font-weight:600;border-bottom:2px solid #e9ecef;background:transparent">Clasif.</th>
                 <th style="font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#6c757d;font-weight:600;border-bottom:2px solid #e9ecef;background:transparent">Cantidad</th>
                 <th style="font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#6c757d;font-weight:600;border-bottom:2px solid #e9ecef;background:transparent">Cap. Recipiente</th>
               </tr>
@@ -115,15 +116,18 @@
             <tbody>
               @forelse($withdrawal->items as $item)
                 <tr>
-                  <td>{{ $item->waste->description ?? '—' }}</td>
-                  <td>{{ $item->physical_state ?: '—' }}</td>
-                  <td>{{ $item->packaging_type ?: '—' }}</td>
+                  <td>
+                    {{ $item->waste->description ?? '—' }}
+                    @if($item->waste?->physical_state || $item->waste?->packaging_type)
+                      <br><small class="text-muted">{{ $item->waste->physical_state }} {{ $item->waste->packaging_type ? '· ' . $item->waste->packaging_type : '' }}</small>
+                    @endif
+                  </td>
                   <td>{{ number_format($item->quantity, 3) }} {{ $item->unit }}</td>
                   <td>{{ $item->container_capacity ?: '—' }}</td>
                 </tr>
               @empty
                 <tr>
-                  <td colspan="5" class="text-center text-muted py-3">Sin residuos registrados</td>
+                  <td colspan="3" class="text-center text-muted py-3">Sin residuos registrados</td>
                 </tr>
               @endforelse
             </tbody>

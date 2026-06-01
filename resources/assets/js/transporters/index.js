@@ -81,13 +81,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
       processing: true,
       serverSide: true, // Recomendado para YajraDataTables
       columns: [
-        { data: 'id', width: '2%', className: 'text-center' },
-        { data: 'company_name', width: '25%' },
-        { data: 'rfc', width: '15%' },
-        { data: 'contact_person', width: '20%' },
-        { data: 'email_remissions', width: '15%' },
-        { data: 'status', width: '10%', className: 'text-center' },
-        { data: 'action', width: '13%', className: 'text-center', orderable: false, searchable: false }
+        { data: 'id',                   width: '3%',  className: 'text-center' },
+        { data: 'company_name',         width: '28%' },
+        { data: 'authorization_number', width: '15%' },
+        { data: 'contact_person',       width: '18%' },
+        { data: 'email_remissions',     width: '15%' },
+        { data: 'status',               width: '9%',  className: 'text-center' },
+        { data: 'action',               width: '12%', className: 'text-center', orderable: false, searchable: false }
       ],
       columnDefs: [
         {

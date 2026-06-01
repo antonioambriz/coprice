@@ -49,13 +49,20 @@
             </select>
           </div>
 
-          {{-- TOGGLE SUB-GENERADORES --}}
-          <div class="col-12">
+          {{-- TOGGLES --}}
+          <div class="col-12 d-flex gap-4 flex-wrap">
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox" name="has_sub_generators" id="hasSubGenerators"
                 value="1" {{ old('has_sub_generators') ? 'checked' : '' }}>
               <label class="form-check-label fw-semibold" for="hasSubGenerators">
                 Tiene divisiones / sub-generadores
+              </label>
+            </div>
+            <div class="form-check form-switch" id="requiresManifestToggle">
+              <input class="form-check-input" type="checkbox" name="requires_manifest" id="requiresManifest"
+                value="1" {{ old('requires_manifest') ? 'checked' : '' }}>
+              <label class="form-check-label fw-semibold" for="requiresManifest">
+                Requiere manifiesto
               </label>
             </div>
           </div>

@@ -161,9 +161,11 @@ use App\Http\Controllers\charts\ChartJs;
 use App\Http\Controllers\maps\Leaflet;
 
 use App\Http\Controllers\GeneratorController;
+use App\Http\Controllers\WastePriceController;
 use App\Http\Controllers\WasteController;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\TransporterController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TransportEquipmentController;
 use App\Http\Controllers\FinalDestinationController;
 use App\Http\Controllers\ManifestController;
@@ -184,6 +186,14 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
 
 Route::resource('generators', GeneratorController::class);
+
+Route::get('clients/get-data', [ClientController::class, 'getData'])->name('clients.get-data');
+Route::post('clients/{client}/generator-wastes', [ClientController::class, 'saveGeneratorWastes'])->name('clients.generator-wastes.save');
+Route::resource('clients', ClientController::class);
+
+// Matrices de precios por residuo (por transportista)
+Route::get('transporters/{transporter}/waste-prices',  [WastePriceController::class, 'forTransporter'])->name('waste-prices.transporter');
+Route::post('transporters/{transporter}/waste-prices', [WastePriceController::class, 'saveTransporter'])->name('waste-prices.saveTransporter');
 
 // Rutas para DataTables (Deben ir ARRIBA de los resource)
 Route::get('wastes/get-data', [WasteController::class, 'getData'])->name('wastes.getData');

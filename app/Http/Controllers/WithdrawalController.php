@@ -27,8 +27,8 @@ class WithdrawalController extends Controller
         $transporters      = Transporter::orderBy('company_name')->get();
         $wastes            = Waste::orderBy('description')->get();
         $finalDestinations = FinalDestination::where('activo', true)->orderBy('name')->get();
-        // Folio: YYYYMMDD + consecutivo del día (2 dígitos)
-        $hoy         = now()->format('Ymd');
+        // Folio: YYMMDD + consecutivo del día (2 dígitos)
+        $hoy         = now()->format('ymd');
         $consecutivo = Withdrawal::whereDate('created_at', now()->toDateString())->count() + 1;
         $nuevoFolio  = $hoy . str_pad($consecutivo, 2, '0', STR_PAD_LEFT);
 
@@ -65,6 +65,7 @@ class WithdrawalController extends Controller
                 $items = $validated['items'];
                 unset($validated['items']);
 
+                $validated['user_id'] = auth()->id();
                 $withdrawal = Withdrawal::create($validated);
 
                 foreach ($items as $item) {
@@ -88,9 +89,71 @@ class WithdrawalController extends Controller
         return view('content.withdrawals.show', compact('withdrawal'));
     }
 
+    public function edit(Withdrawal $withdrawal)
+    {
+        $withdrawal->load(['items.waste', 'generator', 'subGenerator', 'transporter', 'transportEquipment']);
+
+        $generators        = Generator::orderBy('company_name')->get();
+        $transporters      = Transporter::orderBy('company_name')->get();
+        $wastes            = Waste::orderBy('description')->get();
+        $finalDestinations = FinalDestination::where('activo', true)->orderBy('name')->get();
+
+        return view('content.withdrawals.edit', compact(
+            'withdrawal', 'generators', 'transporters', 'wastes', 'finalDestinations'
+        ));
+    }
+
+    public function update(Request $request, Withdrawal $withdrawal)
+    {
+        $validated = $request->validate([
+            'folio_interno'                => 'required|unique:withdrawals,folio_interno,' . $withdrawal->id,
+            'reception_date'               => 'required|date',
+            'generator_id'                 => 'required|exists:generators,id',
+            'sub_generator_id'             => 'nullable|exists:sub_generators,id',
+            'transporter_id'               => 'required|exists:transporters,id',
+            'ticket_externo'               => 'nullable|string',
+            'folio_salida'                 => 'nullable|string',
+            'departure_date'               => 'nullable|date',
+            'observaciones'                => 'nullable|string',
+            'treatment_stage'              => 'nullable|string',
+            'final_destination_id'         => 'nullable|exists:final_destinations,id',
+            'is_estimated_weight'          => 'boolean',
+            'requires_manifest'            => 'boolean',
+            'requires_transport_equipment' => 'boolean',
+            'transport_equipment_id'       => 'nullable|exists:transport_equipments,id',
+            'payment_status'               => 'required|in:PENDIENTE,PAGADO',
+            'items'                        => 'required|array|min:1',
+            'items.*.waste_id'             => 'required|exists:wastes,id',
+            'items.*.quantity'             => 'required|numeric|min:0',
+            'items.*.unit'                 => 'required|string',
+        ]);
+
+        try {
+            DB::transaction(function () use ($validated, $withdrawal) {
+                $items = $validated['items'];
+                unset($validated['items']);
+
+                $withdrawal->update($validated);
+
+                $withdrawal->items()->delete();
+                foreach ($items as $item) {
+                    if (!empty($item['container_capacity']) && !empty($item['container_unit'])) {
+                        $item['container_capacity'] = $item['container_capacity'] . ' ' . $item['container_unit'];
+                    }
+                    unset($item['container_unit']);
+                    $withdrawal->items()->create($item);
+                }
+            });
+
+            return redirect()->route('withdrawals.show', $withdrawal)->with('success', 'Retiro actualizado exitosamente.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error al actualizar el retiro: ' . $e->getMessage())->withInput();
+        }
+    }
+
     public function getData()
     {
-        $withdrawals = Withdrawal::with(['generator', 'subGenerator', 'transporter', 'manifest'])->get();
+        $withdrawals = Withdrawal::with(['generator', 'subGenerator', 'transporter', 'manifest', 'user'])->get();
 
         return response()->json([
             'data' => $withdrawals->map(function ($w) {
@@ -104,6 +167,7 @@ class WithdrawalController extends Controller
                     'manifest'                => $w->manifest->manifest_number ?? 'S/M',
                     'is_estimated_weight'     => $w->is_estimated_weight,
                     'status'                  => $w->payment_status,
+                    'user_name'               => $w->user->name ?? '—',
                     'activo'                  => true,
                 ];
             })

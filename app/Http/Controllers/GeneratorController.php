@@ -43,6 +43,7 @@ class GeneratorController extends Controller
                 'rfc'                      => $request->rfc,
                 'address'                  => $request->address,
                 'has_sub_generators'       => $request->boolean('has_sub_generators'),
+                'requires_manifest'        => $request->boolean('requires_manifest'),
                 'preferred_transporter_id' => $request->preferred_transporter_id ?: null,
             ]);
 
@@ -91,6 +92,7 @@ class GeneratorController extends Controller
                 'rfc'                      => $request->rfc,
                 'address'                  => $request->address,
                 'has_sub_generators'       => $request->boolean('has_sub_generators'),
+                'requires_manifest'        => $request->boolean('requires_manifest'),
                 'preferred_transporter_id' => $request->preferred_transporter_id ?: null,
             ]);
 

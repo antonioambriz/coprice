@@ -2,63 +2,39 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Transporter;
+use Illuminate\Database\Seeder;
 
 class TransporterSeeder extends Seeder
 {
     public function run(): void
     {
-
-    //Transporter::factory(10)->create();
-
         $transporters = [
-            [
-                'company_name'     => 'TRANSPORTES ESPECIALIZADOS COPRICE',
-                'rfc'              => 'TEC100520ABC',
-                'contact_person'   => 'ING. RICARDO MÉNDEZ',
-                'email_remissions' => 'logistica@coprice.com',
-                'address'          => 'AV. INDUSTRIAL 123, QUERÉTARO, QRO.',
-                'activo'           => 1,
-            ],
-            [
-                'company_name'     => 'LOGÍSTICA Y DISTRIBUCIÓN DEL BAJÍO S.A. DE C.V.',
-                'rfc'              => 'LDB150822XYZ',
-                'contact_person'   => 'LIC. MARÍA ESTRADA',
-                'email_remissions' => 'facturacion@logibajio.mx',
-                'address'          => 'PARQUE INDUSTRIAL BALVANERA, CORREGIDORA, QRO.',
-                'activo'           => 1,
-            ],
-            [
-                'company_name'     => 'SERVICIOS AMBIENTALES INTEGRALES S.A.',
-                'rfc'              => 'SAI980115HJK',
-                'contact_person'   => 'JUAN CARLOS PARRA',
-                'email_remissions' => 'operaciones@ambientales.com',
-                'address'          => 'CALLE 5 DE MAYO #45, CELAYA, GTO.',
-                'activo'           => 1,
-            ],
-            [
-                'company_name'     => 'TRANSPORTES INTERMODALES DE MÉXICO',
-                'rfc'              => 'TIM051130123',
-                'contact_person'   => 'ING. ALBERTO RUIZ',
-                'email_remissions' => 'remisiones@intermodales.mx',
-                'address'          => 'LIBRAMIENTO SUR PONIENTE KM 15, QRO.',
-                'activo'           => 1,
-            ],
-            [
-                'company_name'     => 'SOLUCIONES EN LOGÍSTICA TERRESTRE',
-                'rfc'              => 'SLT200202TT1',
-                'contact_person'   => 'SOFÍA REYES',
-                'email_remissions' => 'administracion@slt.com.mx',
-                'address'          => 'CONOCIDO, SAN JUAN DEL RÍO, QRO.',
-                'activo'           => 1,
-            ]
+            ['company_name' => 'AGUAS Y DRENAJES',                 'authorization_number' => 'IRA-PRME-516/2016'],
+            ['company_name' => 'ALEJANDRO',                         'authorization_number' => null],
+            ['company_name' => 'BACHOCO (CEDIS)',                   'authorization_number' => null],
+            ['company_name' => 'COPRICE',                           'authorization_number' => 'CEL-PRME-061/2009'],
+            ['company_name' => 'CR SOLUCIONES EN MOVIMIENTO',      'authorization_number' => null],
+            ['company_name' => 'Desperdicios Queretana',            'authorization_number' => 'SEDESU/RPPSA/229-09'],
+            ['company_name' => 'DESOLTEC',                          'authorization_number' => null],
+            ['company_name' => 'GEN',                               'authorization_number' => 'IRA-PRME-329/2014'],
+            ['company_name' => 'GGS',                               'authorization_number' => null],
+            ['company_name' => 'GREGORIO',                          'authorization_number' => null],
+            ['company_name' => 'JOSE ALFREDO SANABRIA VARGAS',     'authorization_number' => 'IRA-PRME-011/2008'],
+            ['company_name' => 'LILIANA ALMAGUER',                  'authorization_number' => 'IRA-PRME-593/2017'],
+            ['company_name' => 'LSP',                               'authorization_number' => 'IRA-PRME-204/2012'],
+            ['company_name' => 'MA. ALEJANDRA LANDA MUÑOZ',       'authorization_number' => 'CEL-PRME-617/2017'],
+            ['company_name' => 'MONBA',                             'authorization_number' => 'SIL-PRME-804/2019'],
+            ['company_name' => 'RECICLAJE Y RECOLECCIÓN',          'authorization_number' => 'CEL-PRME-122/2011'],
+            ['company_name' => 'SECOMI CONTRACTORS',                'authorization_number' => 'IRA-PRME-763/2019'],
+            ['company_name' => 'SECOMI TÉCNICOS',                  'authorization_number' => 'LEN-PRME-824/2019'],
+            ['company_name' => 'ZEROLANDFILL',                      'authorization_number' => 'CEL-PRME-756/2018'],
         ];
 
-        foreach ($transporters as $transporter) {
-            Transporter::updateOrCreate(['rfc' => $transporter['rfc']], $transporter);
+        foreach ($transporters as $t) {
+            Transporter::create(array_merge($t, ['activo' => 1]));
         }
 
-        $this->command->info("Se han cargado " . count($transporters) . " transportistas al catálogo.");
+        $this->command->info('Se cargaron ' . count($transporters) . ' transportistas.');
     }
 }

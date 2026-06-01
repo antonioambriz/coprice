@@ -51,7 +51,7 @@
           <tr>
             <th>Id</th>
             <th>Nombre / Razón Social</th>
-            <th>RFC</th>
+            <th>Autorización</th>
             <th>Contacto</th>
             <th>Email Remisiones</th>
             <th class="text-center">Estatus</th>
@@ -62,7 +62,7 @@
           <tr>
             <th>Id</th>
             <th>Nombre / Razón Social</th>
-            <th>RFC</th>
+            <th>Autorización</th>
             <th>Contacto</th>
             <th>Email Remisiones</th>
             <th class="text-center">Estatus</th>
