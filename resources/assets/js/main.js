@@ -4,34 +4,37 @@
 
 'use strict';
 
-// DataTables: idioma español global
-$(document).ready(function () {
-  if (typeof $.fn.dataTable !== 'undefined') {
-    $.extend($.fn.dataTable.defaults, {
-      language: {
-        emptyTable: 'No hay datos disponibles en la tabla',
-        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        infoEmpty: 'Mostrando 0 a 0 de 0 registros',
-        infoFiltered: '(filtrado de _MAX_ registros totales)',
-        lengthMenu: 'Mostrar _MENU_ registros',
-        loadingRecords: 'Cargando...',
-        processing: 'Procesando...',
-        search: 'Buscar:',
-        zeroRecords: 'No se encontraron registros coincidentes',
-        paginate: {
-          first: 'Primero',
-          last: 'Último',
-          next: 'Siguiente',
-          previous: 'Anterior'
-        },
-        aria: {
-          sortAscending: ': activar para ordenar la columna de forma ascendente',
-          sortDescending: ': activar para ordenar la columna de forma descendente'
-        }
-      }
-    });
+// DataTables: idioma español global (se establece antes de cualquier inicialización)
+(function setDataTableLanguage() {
+  const lang = {
+    emptyTable: 'No hay datos disponibles',
+    info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+    infoEmpty: 'Sin registros para mostrar',
+    infoFiltered: '(filtrado)',
+    lengthMenu: 'Mostrar _MENU_ registros',
+    loadingRecords: 'Cargando...',
+    processing: 'Procesando...',
+    search: 'Buscar:',
+    zeroRecords: 'No se encontraron registros',
+    paginate: {
+      first: 'Primero',
+      last: 'Último',
+      next: 'Siguiente',
+      previous: 'Anterior'
+    },
+    aria: {
+      sortAscending: ': ordenar ascendente',
+      sortDescending: ': ordenar descendente'
+    }
+  };
+
+  if (window.DataTable) {
+    $.extend(true, DataTable.defaults.language, lang);
   }
-});
+  if (window.$ && $.fn && $.fn.dataTable) {
+    $.extend(true, $.fn.dataTable.defaults.language, lang);
+  }
+})();
 
 window.isRtl = window.Helpers.isRtl();
 window.isDarkStyle = window.Helpers.isDarkStyle();
