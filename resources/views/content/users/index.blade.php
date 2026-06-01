@@ -39,7 +39,7 @@
         <i class="ti tabler-plus me-1"></i> Nuevo Usuario
       </a>
     </div>
-    <div class="card-datatable text-nowrap">
+    <div class="card-datatable text-nowrap px-4">
       <table class="dt-column-search table table-bordered table-hover">
         <thead>
           <tr>

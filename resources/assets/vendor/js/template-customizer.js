@@ -1479,17 +1479,17 @@ TemplateCustomizer.COLORS = [
 TemplateCustomizer.THEMES = [
   {
     name: 'light',
-    title: 'Light',
+    title: 'Claro',
     image: '<i class="ti tabler-sun icon-base mb-0"></i>'
   },
   {
     name: 'dark',
-    title: 'Dark',
+    title: 'Oscuro',
     image: '<i class="ti tabler-moon icon-base mb-0"></i>'
   },
   {
     name: 'system',
-    title: 'System',
+    title: 'Sistema',
     image: '<i class="ti tabler-device-desktop-analytics icon-base mb-0"></i>'
   }
 ]
@@ -1499,35 +1499,27 @@ TemplateCustomizer.SKINS = [
   {
     id: 0,
     name: 'default',
-    title: 'Default',
+    title: 'Predeterminado',
     image: 'skin-default.svg'
   },
   {
     id: 1,
     name: 'bordered',
-    title: 'Bordered',
+    title: 'Bordeado',
     image: 'skin-border.svg'
   }
-  // To add a new skin, simply add a new entry here:
-  // Example:
-  // {
-  //   id: 2,
-  //   name: 'raspberry',
-  //   title: 'Raspberry',
-  //   image: 'skin-border.svg'
-  // }
 ]
 
 // Layouts
 TemplateCustomizer.LAYOUTS = [
   {
     name: 'expanded',
-    title: 'Expanded',
+    title: 'Expandido',
     image: 'layouts-expanded.svg'
   },
   {
     name: 'collapsed',
-    title: 'Collapsed',
+    title: 'Colapsado',
     image: 'layouts-collapsed.svg'
   }
 ]
@@ -1536,17 +1528,17 @@ TemplateCustomizer.LAYOUTS = [
 TemplateCustomizer.NAVBAR_OPTIONS = [
   {
     name: 'sticky',
-    title: 'Sticky',
+    title: 'Fija',
     image: 'navbar-sticky.svg'
   },
   {
     name: 'static',
-    title: 'Static',
+    title: 'Estática',
     image: 'navbar-static.svg'
   },
   {
     name: 'hidden',
-    title: 'Hidden',
+    title: 'Oculta',
     image: 'navbar-hidden.svg'
   }
 ]
@@ -1555,12 +1547,12 @@ TemplateCustomizer.NAVBAR_OPTIONS = [
 TemplateCustomizer.HEADER_TYPES = [
   {
     name: 'fixed',
-    title: 'Fixed',
+    title: 'Fijo',
     image: 'horizontal-fixed.svg'
   },
   {
     name: 'static',
-    title: 'Static',
+    title: 'Estático',
     image: 'horizontal-static.svg'
   }
 ]
@@ -1569,12 +1561,12 @@ TemplateCustomizer.HEADER_TYPES = [
 TemplateCustomizer.CONTENT = [
   {
     name: 'compact',
-    title: 'Compact',
+    title: 'Compacto',
     image: 'content-compact.svg'
   },
   {
     name: 'wide',
-    title: 'Wide',
+    title: 'Amplio',
     image: 'content-wide.svg'
   }
 ]
@@ -1583,12 +1575,12 @@ TemplateCustomizer.CONTENT = [
 TemplateCustomizer.DIRECTIONS = [
   {
     name: 'ltr',
-    title: 'Left to Right (En)',
+    title: 'Izquierda a Derecha',
     image: 'direction-ltr.svg'
   },
   {
     name: 'rtl',
-    title: 'Right to Left (Ar)',
+    title: 'Derecha a Izquierda',
     image: 'direction-rtl.svg'
   }
 ]
@@ -1609,6 +1601,21 @@ TemplateCustomizer.LANGUAGES = {
     content_label: 'Content',
     layout_navbar_label: 'Navbar Type',
     direction_label: 'Direction'
+  },
+  es: {
+    panel_header: 'Personalización',
+    panel_sub_header: 'Personaliza y previsualiza en tiempo real',
+    theming_header: 'Apariencia',
+    color_label: 'Color principal',
+    theme_label: 'Tema',
+    skin_label: 'Estilo',
+    semiDark_label: 'Semi oscuro',
+    layout_header: 'Diseño',
+    layout_label: 'Menú (Navegación)',
+    layout_header_label: 'Tipo de encabezado',
+    content_label: 'Contenido',
+    layout_navbar_label: 'Barra de navegación',
+    direction_label: 'Dirección'
   },
   fr: {
     panel_header: 'Modèle De Personnalisation',
