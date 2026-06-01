@@ -1,5 +1,11 @@
-/* Logo: limitar ancho cuando el menú está colapsado */
+/* Logo: limitar ancho y centrar cuando el menú está colapsado */
 .layout-menu-collapsed #layout-menu .app-brand-logo {
   max-width: 40px;
   overflow: hidden;
+}
+
+.layout-menu-collapsed #layout-menu .app-brand-link {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
 }
