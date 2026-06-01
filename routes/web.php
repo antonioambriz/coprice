@@ -166,6 +166,7 @@ use App\Http\Controllers\WasteController;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\TransporterController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransportEquipmentController;
 use App\Http\Controllers\FinalDestinationController;
 use App\Http\Controllers\ManifestController;
@@ -186,6 +187,11 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
 
 Route::resource('generators', GeneratorController::class);
+
+Route::middleware('role:SUPERADMIN')->group(function () {
+    Route::get('users/get-data', [UserController::class, 'getData'])->name('users.get-data');
+    Route::resource('users', UserController::class);
+});
 
 Route::get('clients/get-data', [ClientController::class, 'getData'])->name('clients.get-data');
 Route::post('clients/{client}/generator-wastes', [ClientController::class, 'saveGeneratorWastes'])->name('clients.generator-wastes.save');

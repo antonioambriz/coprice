@@ -61,6 +61,9 @@
       "slug": "withdrawals"
     },
     {
+      "menuHeader": "Documentos"
+    },
+    {
       "name": "Reportes",
       "icon": "menu-icon icon-base ti tabler-chart-bar",
       "slug": "reportes",
@@ -72,6 +75,17 @@
           "icon": "menu-icon icon-base ti tabler-file-certificate"
         }
       ]
+    },
+    {
+      "menuHeader": "Configuración",
+      "roles": ["SUPERADMIN"]
+    },
+    {
+      "url": "users",
+      "icon": "menu-icon icon-base ti tabler-users",
+      "name": "Usuarios",
+      "slug": "users",
+      "roles": ["SUPERADMIN"]
     }
   ]
 }
