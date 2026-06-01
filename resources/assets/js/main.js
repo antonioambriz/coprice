@@ -4,6 +4,35 @@
 
 'use strict';
 
+// DataTables: idioma español global
+$(document).ready(function () {
+  if (typeof $.fn.dataTable !== 'undefined') {
+    $.extend($.fn.dataTable.defaults, {
+      language: {
+        emptyTable: 'No hay datos disponibles en la tabla',
+        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        infoEmpty: 'Mostrando 0 a 0 de 0 registros',
+        infoFiltered: '(filtrado de _MAX_ registros totales)',
+        lengthMenu: 'Mostrar _MENU_ registros',
+        loadingRecords: 'Cargando...',
+        processing: 'Procesando...',
+        search: 'Buscar:',
+        zeroRecords: 'No se encontraron registros coincidentes',
+        paginate: {
+          first: 'Primero',
+          last: 'Último',
+          next: 'Siguiente',
+          previous: 'Anterior'
+        },
+        aria: {
+          sortAscending: ': activar para ordenar la columna de forma ascendente',
+          sortDescending: ': activar para ordenar la columna de forma descendente'
+        }
+      }
+    });
+  }
+});
+
 window.isRtl = window.Helpers.isRtl();
 window.isDarkStyle = window.Helpers.isDarkStyle();
 let menu,
