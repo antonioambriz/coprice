@@ -61,7 +61,7 @@
       "slug": "withdrawals"
     },
     {
-      "menuHeader": "Documentos"
+      "menuHeader": "Reportes"
     },
     {
       "name": "Reportes",
@@ -69,9 +69,15 @@
       "slug": "reportes",
       "submenu": [
         {
-          "url": "withdrawals",
-          "name": "Reporte SAMA",
-          "slug": "withdrawals",
+          "url": "reports/withdrawals",
+          "name": "Retiros por período",
+          "slug": "reports-withdrawals",
+          "icon": "menu-icon icon-base ti tabler-file-invoice"
+        },
+        {
+          "url": "withdrawals/export-sama",
+          "name": "Exportar SAMA",
+          "slug": "withdrawals-sama",
           "icon": "menu-icon icon-base ti tabler-file-certificate"
         }
       ]
@@ -85,6 +91,13 @@
       "icon": "menu-icon icon-base ti tabler-users",
       "name": "Usuarios",
       "slug": "users",
+      "roles": ["SUPERADMIN"]
+    },
+    {
+      "url": "permissions",
+      "icon": "menu-icon icon-base ti tabler-shield-lock",
+      "name": "Permisos de Acceso",
+      "slug": "permissions",
       "roles": ["SUPERADMIN"]
     }
   ]

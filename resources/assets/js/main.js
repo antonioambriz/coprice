@@ -4,36 +4,34 @@
 
 'use strict';
 
-// DataTables: idioma español global (se establece antes de cualquier inicialización)
+// DataTables: idioma español global
+// DataTables 2.x usa oLanguage internamente (notación húngara), no la clave "language"
 (function setDataTableLanguage() {
-  const lang = {
-    emptyTable: 'No hay datos disponibles',
-    info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-    infoEmpty: 'Sin registros para mostrar',
-    infoFiltered: '(filtrado)',
-    lengthMenu: 'Mostrar _MENU_ registros',
-    loadingRecords: 'Cargando...',
-    processing: 'Procesando...',
-    search: 'Buscar:',
-    zeroRecords: 'No se encontraron registros',
-    paginate: {
-      first: 'Primero',
-      last: 'Último',
-      next: 'Siguiente',
-      previous: 'Anterior'
-    },
-    aria: {
-      sortAscending: ': ordenar ascendente',
-      sortDescending: ': ordenar descendente'
+  function applyLang() {
+    if (!window.DataTable || !DataTable.defaults.oLanguage) return;
+    const l = DataTable.defaults.oLanguage;
+    l.sEmptyTable     = 'No hay datos disponibles';
+    l.sInfo           = 'Mostrando _START_ a _END_ de _TOTAL_ registros';
+    l.sInfoEmpty      = 'Sin registros para mostrar';
+    l.sInfoFiltered   = '(filtrado)';
+    l.sLengthMenu     = 'Mostrar _MENU_ registros';
+    l.sLoadingRecords = 'Cargando...';
+    l.sProcessing     = 'Procesando...';
+    l.sSearch         = 'Buscar:';
+    l.sZeroRecords    = 'No se encontraron registros';
+    if (l.oPaginate) {
+      l.oPaginate.sFirst    = 'Primero';
+      l.oPaginate.sLast     = 'Último';
+      l.oPaginate.sNext     = 'Siguiente';
+      l.oPaginate.sPrevious = 'Anterior';
     }
-  };
+  }
 
-  if (window.DataTable) {
-    $.extend(true, DataTable.defaults.language, lang);
-  }
-  if (window.$ && $.fn && $.fn.dataTable) {
-    $.extend(true, $.fn.dataTable.defaults.language, lang);
-  }
+  // Intento inmediato (si DataTables ya cargó antes que main.js)
+  applyLang();
+
+  // Respaldo: los módulos ES se ejecutan antes de DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', applyLang);
 })();
 
 window.isRtl = window.Helpers.isRtl();
