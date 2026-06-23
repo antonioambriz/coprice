@@ -26,8 +26,10 @@ $(function () {
   };
 
   $('.flatpickr').each(function () {
+    const isReceptionDate = this.id === 'receptionDate';
     flatpickr(this, {
       ...fpConfig,
+      ...(isReceptionDate ? { enableTime: false, dateFormat: 'Y-m-d', altFormat: 'd/m/Y' } : {}),
       defaultDate: $(this).val() || new Date(),
     });
   });

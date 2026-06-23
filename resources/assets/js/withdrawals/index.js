@@ -57,17 +57,17 @@ document.addEventListener('DOMContentLoaded', function () {
     order: [[1, 'desc']],
     pageLength: 25,
     processing: true,
+    serverSide: true,
     columns: [
-      { data: 'id' },
-      { data: 'fecha' },
-      { data: 'folio_interno' },
+      { data: 'id', width: '2%' },
+      { data: 'fecha', width: '5%' },
+      { data: 'folio_interno', width: '5%' },
       { data: 'generator_name' },
       { data: 'transporter_name' },
-      { data: 'manifest' },
-      { data: 'is_estimated_weight' },
-      { data: 'status' },
-      { data: 'user_name' },
-      { data: null, orderable: false, searchable: false },
+      { data: 'manifest', width: '5%' },
+      { data: 'status', width: '5%' },
+      { data: 'user_name', width: '2%' },
+      { data: null, orderable: false, searchable: false, width: '5%' },
     ],
     columnDefs: [
       {
@@ -97,15 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
       },
       {
-        targets: 6, // Peso asumido
-        render: function (data) {
-          return data
-            ? '<span class="badge bg-label-warning">Estimado</span>'
-            : '<span class="badge bg-label-success">Real</span>';
-        },
-      },
-      {
-        targets: 7, // Estatus pago
+        targets: 6, // Estatus pago
         render: function (data) {
           const map = {
             PENDIENTE: 'bg-label-warning',
@@ -113,6 +105,13 @@ document.addEventListener('DOMContentLoaded', function () {
             CANCELADO: 'bg-label-danger',
           };
           return `<span class="badge ${map[data] || 'bg-label-secondary'}">${data}</span>`;
+        },
+      },
+      {
+        targets: 7, // Usuario (iniciales)
+        render: function (data) {
+          if (!data || data === '—') return data;
+          return (data.match(/\b\w/g) || []).slice(0, 2).join('').toUpperCase();
         },
       },
       {
@@ -165,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const cloneRow = thead.querySelector('tr').cloneNode(true);
   thead.appendChild(cloneRow);
   thead.querySelectorAll('tr:nth-child(2) th').forEach((th, i) => {
-    if (i === 9) {
+    if (i === 8) {
       th.innerHTML =
         '<div class="text-center"><button class="btn btn-sm btn-label-secondary btn-icon" id="btn-reset-filters"><i class="ti tabler-filter-off"></i></button></div>';
       th.querySelector('#btn-reset-filters').addEventListener('click', () => {

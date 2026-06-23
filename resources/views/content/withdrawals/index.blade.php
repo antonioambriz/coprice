@@ -54,7 +54,6 @@
             <th>Generador</th>
             <th>Transportista</th>
             <th>Manifiesto</th>
-            <th class="text-center">Peso</th>
             <th class="text-center">Estatus</th>
             <th>Usuario</th>
             <th class="text-center"><i class="ti tabler-settings ti-sm text-muted"></i></th>
@@ -68,7 +67,6 @@
             <th>Generador</th>
             <th>Transportista</th>
             <th>Manifiesto</th>
-            <th class="text-center">Peso</th>
             <th class="text-center">Estatus</th>
             <th>Usuario</th>
             <th></th>

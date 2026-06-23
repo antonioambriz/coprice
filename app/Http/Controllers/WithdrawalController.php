@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BitacoraExport;
 use App\Exports\SamaExport;
+use Yajra\DataTables\Facades\DataTables;
 
 class WithdrawalController extends Controller
 {
@@ -153,25 +154,50 @@ class WithdrawalController extends Controller
 
     public function getData()
     {
-        $withdrawals = Withdrawal::with(['generator', 'subGenerator', 'transporter', 'manifest', 'user'])->get();
+        $query = Withdrawal::query()
+            ->select([
+                'withdrawals.id',
+                'withdrawals.reception_date as fecha',
+                'withdrawals.folio_interno',
+                'generators.company_name as generator_name',
+                'sub_generators.name as sub_generator_name',
+                'transporters.company_name as transporter_name',
+                'manifests.manifest_number as manifest',
+                'withdrawals.payment_status as status',
+                'users.name as user_name',
+            ])
+            ->leftJoin('generators', 'generators.id', '=', 'withdrawals.generator_id')
+            ->leftJoin('sub_generators', 'sub_generators.id', '=', 'withdrawals.sub_generator_id')
+            ->leftJoin('transporters', 'transporters.id', '=', 'withdrawals.transporter_id')
+            ->leftJoin('manifests', 'manifests.id', '=', 'withdrawals.manifest_id')
+            ->leftJoin('users', 'users.id', '=', 'withdrawals.user_id');
 
-        return response()->json([
-            'data' => $withdrawals->map(function ($w) {
-                return [
-                    'id'                      => $w->id,
-                    'fecha'                   => $w->reception_date,
-                    'folio_interno'           => $w->folio_interno,
-                    'generator_name'          => $w->generator->company_name ?? 'N/A',
-                    'sub_generator_name'      => $w->subGenerator->name ?? '—',
-                    'transporter_name'        => $w->transporter->company_name ?? 'N/A',
-                    'manifest'                => $w->manifest->manifest_number ?? 'S/M',
-                    'is_estimated_weight'     => $w->is_estimated_weight,
-                    'status'                  => $w->payment_status,
-                    'user_name'               => $w->user->name ?? '—',
-                    'activo'                  => true,
-                ];
+        return DataTables::of($query)
+            ->editColumn('generator_name', fn ($w) => $w->generator_name ?? 'N/A')
+            ->editColumn('transporter_name', fn ($w) => $w->transporter_name ?? 'N/A')
+            ->editColumn('manifest', fn ($w) => $w->manifest ?? 'S/M')
+            ->editColumn('user_name', fn ($w) => $w->user_name ?? '—')
+            ->editColumn('sub_generator_name', fn ($w) => $w->sub_generator_name ?? '—')
+            ->addColumn('activo', fn () => true)
+            ->filterColumn('fecha', function ($query, $keyword) {
+                $query->whereRaw('withdrawals.reception_date like ?', ["%{$keyword}%"]);
             })
-        ]);
+            ->filterColumn('status', function ($query, $keyword) {
+                $query->whereRaw('withdrawals.payment_status like ?', ["%{$keyword}%"]);
+            })
+            ->filterColumn('generator_name', function ($query, $keyword) {
+                $query->whereRaw('generators.company_name like ?', ["%{$keyword}%"]);
+            })
+            ->filterColumn('transporter_name', function ($query, $keyword) {
+                $query->whereRaw('transporters.company_name like ?', ["%{$keyword}%"]);
+            })
+            ->filterColumn('manifest', function ($query, $keyword) {
+                $query->whereRaw('manifests.manifest_number like ?', ["%{$keyword}%"]);
+            })
+            ->filterColumn('user_name', function ($query, $keyword) {
+                $query->whereRaw('users.name like ?', ["%{$keyword}%"]);
+            })
+            ->make(true);
     }
 
     public function destroy(Withdrawal $withdrawal)

@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
       order: [[1, 'asc']],
       pageLength: 25,
       processing: true,
-      serverSide: true, // Recomendado para YajraDataTables
       columns: [
         { data: 'id',                   width: '3%',  className: 'text-center' },
         { data: 'company_name',         width: '28%' },

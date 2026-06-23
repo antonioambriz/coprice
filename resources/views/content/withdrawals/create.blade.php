@@ -204,7 +204,7 @@
             <div class="mb-3">
               <label class="form-label">Fecha Recepción</label>
               <input type="text" name="reception_date" id="receptionDate" class="form-control flatpickr"
-                value="{{ now()->format('Y-m-d H:i') }}">
+                value="{{ now()->format('Y-m-d') }}">
             </div>
             <div class="mb-3">
               <label class="form-label">Etapa de manejo integral</label>

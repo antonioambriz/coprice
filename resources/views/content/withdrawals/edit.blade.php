@@ -209,7 +209,7 @@
             <div class="mb-3">
               <label class="form-label">Fecha Recepción</label>
               <input type="text" name="reception_date" id="receptionDate" class="form-control flatpickr"
-                value="{{ old('reception_date', $withdrawal->reception_date?->format('Y-m-d H:i')) }}">
+                value="{{ old('reception_date', $withdrawal->reception_date?->format('Y-m-d')) }}">
             </div>
             <div class="mb-3">
               <label class="form-label">Etapa de manejo integral</label>
