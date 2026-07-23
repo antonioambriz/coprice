@@ -284,7 +284,7 @@ Route::get('withdrawals/transport-equipments/{transporter}', [WithdrawalControll
 Route::get('withdrawals/operators/{transporter}', [WithdrawalController::class, 'getOperators'])->name('withdrawals.operators')->middleware('permission');
 Route::resource('withdrawals', WithdrawalController::class)->middleware('permission');
 
-Route::get('/dashboard/analytics', [Analytics::class, 'index'])->name('dashboard-analytics');
+Route::get('/dashboard/analytics', [Analytics::class, 'index'])->name('dashboard-analytics-demo');
 Route::get('/dashboard/crm', [Crm::class, 'index'])->name('dashboard-crm');
 // locale
 Route::get('/lang/{locale}', [LanguageController::class, 'swap']);
@@ -295,8 +295,8 @@ Route::get('/layouts/content-navbar', [ContentNavbar::class, 'index'])->name('la
 Route::get('/layouts/content-nav-sidebar', [ContentNavSidebar::class, 'index'])->name('layouts-content-nav-sidebar');
 Route::get('/layouts/navbar-full', [NavbarFull::class, 'index'])->name('layouts-navbar-full');
 Route::get('/layouts/navbar-full-sidebar', [NavbarFullSidebar::class, 'index'])->name('layouts-navbar-full-sidebar');
-Route::get('/layouts/horizontal', [Horizontal::class, 'index'])->name('dashboard-analytics');
-Route::get('/layouts/vertical', [Vertical::class, 'index'])->name('dashboard-analytics');
+Route::get('/layouts/horizontal', [Horizontal::class, 'index'])->name('layouts-horizontal');
+Route::get('/layouts/vertical', [Vertical::class, 'index'])->name('layouts-vertical');
 Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
 Route::get('/layouts/without-navbar', [WithoutNavbar::class, 'index'])->name('layouts-without-navbar');
 Route::get('/layouts/fluid', [Fluid::class, 'index'])->name('layouts-fluid');
