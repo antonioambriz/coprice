@@ -19,7 +19,7 @@ $(document).ready(function () {
     const folio = $(this).data('folio');
 
     Swal.fire({
-      title: '¿Eliminar retiro?',
+      title: '¿Eliminar entrada?',
       text: `Se eliminará el folio: ${folio}`,
       icon: 'warning',
       showCancelButton: true,
@@ -38,7 +38,7 @@ $(document).ready(function () {
           data: { _method: 'DELETE' },
           success: function () {
             if (dt_withdrawals) dt_withdrawals.ajax.reload(null, false);
-            showToast('Retiro eliminado correctamente.');
+            showToast('Entrada eliminada correctamente.');
           },
         });
       }
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
           {
             buttons: [
               {
-                text: '<i class="ti tabler-plus me-md-1"></i><span class="d-md-inline-block d-none">Nuevo Retiro</span>',
+                text: '<i class="ti tabler-plus me-md-1"></i><span class="d-md-inline-block d-none">Nueva Entrada</span>',
                 className: 'add-new btn btn-primary waves-effect waves-light',
                 action: () => (window.location.href = createUrl),
               },

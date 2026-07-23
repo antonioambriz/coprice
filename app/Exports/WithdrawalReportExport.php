@@ -28,7 +28,7 @@ class WithdrawalReportExport implements
 
     public function title(): string
     {
-        return 'Retiros';
+        return 'Entradas';
     }
 
     public function collection(): Collection

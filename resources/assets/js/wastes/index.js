@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         { data: 'waste_code',     width: '8%',  className: 'text-center' },
         { data: 'description',    width: '28%' },
         { data: 'physical_state', width: '12%', className: 'text-center' },
-        { data: 'stage',          width: '14%', className: 'text-center' },
+        { data: 'packaging_type', width: '14%', className: 'text-center' },
         { data: 'unit',           width: '7%',  className: 'text-center' },
         { data: 'default_price',  width: '9%',  className: 'text-center' },
         { data: 'is_hazardous',   width: '9%',  className: 'text-center' },

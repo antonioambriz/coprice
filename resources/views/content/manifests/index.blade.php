@@ -41,7 +41,7 @@
             <th>Generador</th>
             <th>División</th>
             <th>Período</th>
-            <th class="text-center">Retiros</th>
+            <th class="text-center">Entradas</th>
             <th class="text-center">Generado</th>
             <th class="text-center"><i class="ti tabler-settings ti-sm text-muted"></i></th>
           </tr>
@@ -53,7 +53,7 @@
             <th>Generador</th>
             <th>División</th>
             <th>Período</th>
-            <th class="text-center">Retiros</th>
+            <th class="text-center">Entradas</th>
             <th class="text-center">Generado</th>
             <th></th>
           </tr>

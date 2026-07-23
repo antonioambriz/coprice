@@ -28,7 +28,15 @@ class ClientController extends Controller
             'rfc'            => 'nullable|string|max:13',
             'contact_person' => 'nullable|string|max:255',
             'email'          => 'nullable|email|max:255',
-            'address'        => 'nullable|string',
+            'street'         => 'nullable|string|max:255',
+            'ext_number'     => 'nullable|string|max:255',
+            'int_number'     => 'nullable|string|max:255',
+            'municipality'   => 'nullable|string|max:255',
+            'state'          => 'nullable|string|max:255',
+            'postal_code'    => 'nullable|string|max:5',
+            'country'        => 'nullable|string|max:255',
+            'payment_method' => 'nullable|in:' . implode(',', array_keys(Client::PAYMENT_METHODS)),
+            'credit_days'    => 'nullable|in:' . implode(',', Client::CREDIT_DAYS_OPTIONS),
             'activo'         => 'boolean',
         ]);
 
@@ -77,7 +85,15 @@ class ClientController extends Controller
             'rfc'            => 'nullable|string|max:13',
             'contact_person' => 'nullable|string|max:255',
             'email'          => 'nullable|email|max:255',
-            'address'        => 'nullable|string',
+            'street'         => 'nullable|string|max:255',
+            'ext_number'     => 'nullable|string|max:255',
+            'int_number'     => 'nullable|string|max:255',
+            'municipality'   => 'nullable|string|max:255',
+            'state'          => 'nullable|string|max:255',
+            'postal_code'    => 'nullable|string|max:5',
+            'country'        => 'nullable|string|max:255',
+            'payment_method' => 'nullable|in:' . implode(',', array_keys(Client::PAYMENT_METHODS)),
+            'credit_days'    => 'nullable|in:' . implode(',', Client::CREDIT_DAYS_OPTIONS),
             'activo'         => 'boolean',
         ]);
 

@@ -105,7 +105,7 @@
         {{-- RETIROS --}}
         <div class="card shadow-none border mt-4">
           <div class="card-body">
-            <p class="section-label mb-3">Retiros vinculados</p>
+            <p class="section-label mb-3">Entradas vinculadas</p>
             <div class="mb-3">
               <label class="form-label">Período</label>
               <div class="input-group">
@@ -130,9 +130,9 @@
             </div>
             <select name="withdrawal_ids[]" id="withdrawalsSelect"
               class="form-select" multiple
-              placeholder="Cargando retiros...">
+              placeholder="Cargando entradas...">
             </select>
-            <small class="text-muted mt-1 d-block">Retiros sin manifiesto + los ya vinculados a este manifiesto. Puedes buscar por folio.</small>
+            <small class="text-muted mt-1 d-block">Entradas sin manifiesto + las ya vinculadas a este manifiesto. Puedes buscar por folio.</small>
           </div>
         </div>
 

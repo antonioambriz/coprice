@@ -20,11 +20,13 @@
     <ol class="breadcrumb breadcrumb-custom-icon">
       <li class="breadcrumb-item">
         <a href="{{ route('dashboard-analytics') }}">Inicio</a>
-        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs"></i>
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
       </li>
-      <li class="breadcrumb-item active">
-        <a href="javascript:void(0);">Generadores (Clientes)</a>
+      <li class="breadcrumb-item">
+        Catálogos
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
       </li>
+      <li class="breadcrumb-item active">Generadores</li>
     </ol>
   </nav>
 
@@ -48,7 +50,7 @@
           <tr>
             <th>Id</th>
             <th>Empresa / Razón Social</th>
-            <th>RFC</th>
+            <th>Autorización</th>
             <th>Dirección</th>
             <th class="text-center">Estatus</th>
             <th class="text-center"><i class="ti tabler-settings ti-sm text-muted"></i> Acciones</th>
@@ -59,7 +61,7 @@
           <tr>
             <th>Id</th>
             <th>Empresa / Razón Social</th>
-            <th>RFC</th>
+            <th>Autorización</th>
             <th>Dirección</th>
             <th class="text-center">Estatus</th>
             <th class="text-center">Acciones</th>

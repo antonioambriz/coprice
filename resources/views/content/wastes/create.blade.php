@@ -27,11 +27,15 @@
 @section('content')
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-custom-icon">
-      <li class="breadcrumb-item"><a href="{{ route('dashboard-analytics') }}">Inicio</a><i
-          class="ti tabler-chevron-right icon-xs mx-2"></i></li>
-      <li class="breadcrumb-item"><a href="{{ route('wastes.index') }}">Residuos</a><i
-          class="ti tabler-chevron-right icon-xs mx-2"></i></li>
-      <li class="breadcrumb-item active">Alta de Residuo</li>
+      <li class="breadcrumb-item">
+        <a href="{{ route('dashboard-analytics') }}">Inicio</a>
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item">
+        Catálogos
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item active">Residuos</li>
     </ol>
   </nav>
 
@@ -69,6 +73,7 @@
                   <option value="KG">KILOGRAMOS (KG)</option>
                   <option value="LT">LITROS (LT)</option>
                   <option value="TON">TONELADAS (TON)</option>
+                  <option value="M3">METRO CÚBICO (M3)</option>
                 </select>
               </div>
 

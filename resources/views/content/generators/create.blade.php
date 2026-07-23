@@ -5,11 +5,15 @@
 @section('content')
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-custom-icon">
-      <li class="breadcrumb-item"><a href="{{ route('dashboard-analytics') }}">Inicio</a><i
-          class="ti tabler-chevron-right"></i></li>
-      <li class="breadcrumb-item"><a href="{{ route('generators.index') }}">Generadores</a><i
-          class="ti tabler-chevron-right"></i></li>
-      <li class="breadcrumb-item active">Nuevo</li>
+      <li class="breadcrumb-item">
+        <a href="{{ route('dashboard-analytics') }}">Inicio</a>
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item">
+        Catálogos
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item active">Generadores</li>
     </ol>
   </nav>
 
@@ -30,8 +34,8 @@
             @enderror
           </div>
           <div class="col-md-6">
-            <label class="form-label">RFC</label>
-            <input type="text" name="rfc" class="form-control" value="{{ old('rfc') }}" maxlength="13">
+            <label class="form-label">Autorización</label>
+            <input type="text" name="authorization" class="form-control" value="{{ old('authorization') }}" maxlength="13">
           </div>
           <div class="col-12">
             <label class="form-label">Dirección</label>

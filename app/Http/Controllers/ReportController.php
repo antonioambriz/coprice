@@ -36,7 +36,7 @@ class ReportController extends Controller
     {
         [$withdrawals] = $this->query($request);
 
-        $filename = 'retiros_' . now()->format('Ymd_His') . '.xlsx';
+        $filename = 'entradas_' . now()->format('Ymd_His') . '.xlsx';
 
         return Excel::download(new WithdrawalReportExport($withdrawals), $filename);
     }
@@ -50,7 +50,7 @@ class ReportController extends Controller
         $pdf = Pdf::loadView('content.reports.withdrawals-pdf', compact('withdrawals', 'filters'))
             ->setPaper('letter', 'landscape');
 
-        $filename = 'retiros_' . now()->format('Ymd_His') . '.pdf';
+        $filename = 'entradas_' . now()->format('Ymd_His') . '.pdf';
 
         return $pdf->download($filename);
     }

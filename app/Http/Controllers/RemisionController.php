@@ -46,7 +46,7 @@ class RemisionController extends Controller
         }
 
         return redirect()->route('remisions.index')
-            ->with('success', 'Remisión creada y retiros vinculados exitosamente.');
+            ->with('success', 'Remisión creada y entradas vinculadas exitosamente.');
     }
 
     public function show(Remision $remision)

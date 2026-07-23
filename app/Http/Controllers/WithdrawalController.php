@@ -6,6 +6,7 @@ use App\Models\Withdrawal;
 use App\Models\Generator;
 use App\Models\SubGenerator;
 use App\Models\Transporter;
+use App\Models\Client;
 use App\Models\Waste;
 use App\Models\FinalDestination;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ class WithdrawalController extends Controller
     {
         $generators        = Generator::orderBy('company_name')->get();
         $transporters      = Transporter::orderBy('company_name')->get();
+        $clients           = Client::where('activo', true)->orderBy('company_name')->get();
         $wastes            = Waste::orderBy('description')->get();
         $finalDestinations = FinalDestination::where('activo', true)->orderBy('name')->get();
         // Folio: YYMMDD + consecutivo del día (2 dígitos)
@@ -33,7 +35,7 @@ class WithdrawalController extends Controller
         $consecutivo = Withdrawal::whereDate('created_at', now()->toDateString())->count() + 1;
         $nuevoFolio  = $hoy . str_pad($consecutivo, 2, '0', STR_PAD_LEFT);
 
-        return view('content.withdrawals.create', compact('generators', 'transporters', 'wastes', 'nuevoFolio', 'finalDestinations'));
+        return view('content.withdrawals.create', compact('generators', 'transporters', 'clients', 'wastes', 'nuevoFolio', 'finalDestinations'));
     }
 
     public function store(Request $request)
@@ -44,6 +46,7 @@ class WithdrawalController extends Controller
             'generator_id'            => 'required|exists:generators,id',
             'sub_generator_id'        => 'nullable|exists:sub_generators,id',
             'transporter_id'          => 'required|exists:transporters,id',
+            'client_id'               => 'required|exists:clients,id',
             'ticket_externo'          => 'nullable|string',
             'folio_salida'            => 'nullable|string',
             'departure_date'          => 'nullable|date',
@@ -54,6 +57,7 @@ class WithdrawalController extends Controller
             'requires_manifest'            => 'boolean',
             'requires_transport_equipment' => 'boolean',
             'transport_equipment_id'       => 'nullable|exists:transport_equipments,id',
+            'operator_id'                  => 'nullable|exists:operators,id',
             'payment_status'               => 'required|in:PENDIENTE,PAGADO',
             'items'                   => 'required|array|min:1',
             'items.*.waste_id'        => 'required|exists:wastes,id',
@@ -78,29 +82,30 @@ class WithdrawalController extends Controller
                 }
             });
 
-            return redirect()->route('withdrawals.index')->with('success', 'Retiro registrado exitosamente.');
+            return redirect()->route('withdrawals.index')->with('success', 'Entrada registrada exitosamente.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Error al guardar el retiro: ' . $e->getMessage())->withInput();
+            return back()->with('error', 'Error al guardar la entrada: ' . $e->getMessage())->withInput();
         }
     }
 
     public function show(Withdrawal $withdrawal)
     {
-        $withdrawal->load(['generator', 'subGenerator', 'transporter', 'manifest', 'finalDestination', 'items.waste']);
+        $withdrawal->load(['generator', 'subGenerator', 'transporter', 'client', 'operator', 'manifest', 'finalDestination', 'items.waste']);
         return view('content.withdrawals.show', compact('withdrawal'));
     }
 
     public function edit(Withdrawal $withdrawal)
     {
-        $withdrawal->load(['items.waste', 'generator', 'subGenerator', 'transporter', 'transportEquipment']);
+        $withdrawal->load(['items.waste', 'generator', 'subGenerator', 'transporter', 'client', 'operator', 'transportEquipment']);
 
         $generators        = Generator::orderBy('company_name')->get();
         $transporters      = Transporter::orderBy('company_name')->get();
+        $clients           = Client::where('activo', true)->orderBy('company_name')->get();
         $wastes            = Waste::orderBy('description')->get();
         $finalDestinations = FinalDestination::where('activo', true)->orderBy('name')->get();
 
         return view('content.withdrawals.edit', compact(
-            'withdrawal', 'generators', 'transporters', 'wastes', 'finalDestinations'
+            'withdrawal', 'generators', 'transporters', 'clients', 'wastes', 'finalDestinations'
         ));
     }
 
@@ -112,6 +117,7 @@ class WithdrawalController extends Controller
             'generator_id'                 => 'required|exists:generators,id',
             'sub_generator_id'             => 'nullable|exists:sub_generators,id',
             'transporter_id'               => 'required|exists:transporters,id',
+            'client_id'                    => 'required|exists:clients,id',
             'ticket_externo'               => 'nullable|string',
             'folio_salida'                 => 'nullable|string',
             'departure_date'               => 'nullable|date',
@@ -122,6 +128,7 @@ class WithdrawalController extends Controller
             'requires_manifest'            => 'boolean',
             'requires_transport_equipment' => 'boolean',
             'transport_equipment_id'       => 'nullable|exists:transport_equipments,id',
+            'operator_id'                  => 'nullable|exists:operators,id',
             'payment_status'               => 'required|in:PENDIENTE,PAGADO',
             'items'                        => 'required|array|min:1',
             'items.*.waste_id'             => 'required|exists:wastes,id',
@@ -146,9 +153,9 @@ class WithdrawalController extends Controller
                 }
             });
 
-            return redirect()->route('withdrawals.show', $withdrawal)->with('success', 'Retiro actualizado exitosamente.');
+            return redirect()->route('withdrawals.show', $withdrawal)->with('success', 'Entrada actualizada exitosamente.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Error al actualizar el retiro: ' . $e->getMessage())->withInput();
+            return back()->with('error', 'Error al actualizar la entrada: ' . $e->getMessage())->withInput();
         }
     }
 
@@ -209,10 +216,10 @@ class WithdrawalController extends Controller
     public function exportExcel()
     {
         if (Withdrawal::count() === 0) {
-            return back()->with('error', 'No hay retiros registrados para exportar.');
+            return back()->with('error', 'No hay entradas registradas para exportar.');
         }
 
-        return Excel::download(new BitacoraExport, 'bitacora_retiros.xlsx');
+        return Excel::download(new BitacoraExport, 'bitacora_entradas.xlsx');
     }
 
     public function exportSama(Request $request)
@@ -246,6 +253,16 @@ class WithdrawalController extends Controller
     {
         return response()->json(
             $transporter->transportEquipments()->where('activo', true)->orderBy('description')->get(['id', 'description', 'plate_number'])
+        );
+    }
+
+    /**
+     * Devuelve los operadores activos de un transportista (para carga dinámica en formulario).
+     */
+    public function getOperators(Transporter $transporter)
+    {
+        return response()->json(
+            $transporter->operators()->where('activo', true)->orderBy('name')->get(['id', 'name', 'license_number'])
         );
     }
 }

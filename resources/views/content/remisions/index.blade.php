@@ -41,7 +41,7 @@
             <th>Generador</th>
             <th>División</th>
             <th>Fecha Emisión</th>
-            <th class="text-center">Retiros</th>
+            <th class="text-center">Entradas</th>
             <th class="text-end">Total</th>
             <th class="text-center">Estatus</th>
             <th class="text-center"><i class="ti tabler-settings ti-sm text-muted"></i></th>
@@ -54,7 +54,7 @@
             <th>Generador</th>
             <th>División</th>
             <th>Fecha Emisión</th>
-            <th class="text-center">Retiros</th>
+            <th class="text-center">Entradas</th>
             <th class="text-end">Total</th>
             <th class="text-center">Estatus</th>
             <th></th>

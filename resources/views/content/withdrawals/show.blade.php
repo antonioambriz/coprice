@@ -1,13 +1,13 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Retiro ' . $withdrawal->folio_interno . ' - Coprice')
+@section('title', 'Entrada ' . $withdrawal->folio_interno . ' - Coprice')
 
 @section('content')
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-custom-icon">
       <li class="breadcrumb-item"><a href="{{ route('dashboard-analytics') }}">Inicio</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
-      <li class="breadcrumb-item"><a href="{{ route('withdrawals.index') }}">Bitácora de Retiros</a>
+      <li class="breadcrumb-item"><a href="{{ route('withdrawals.index') }}">Bitácora de Entradas</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
       <li class="breadcrumb-item active">{{ $withdrawal->folio_interno }}</li>
     </ol>

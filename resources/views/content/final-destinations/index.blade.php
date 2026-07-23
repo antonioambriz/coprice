@@ -25,8 +25,14 @@
 @section('content')
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-custom-icon">
-      <li class="breadcrumb-item"><a href="{{ route('dashboard-analytics') }}">Inicio</a>
-        <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
+      <li class="breadcrumb-item">
+        <a href="{{ route('dashboard-analytics') }}">Inicio</a>
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item">
+        Catálogos
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
       <li class="breadcrumb-item active">Destinos Finales</li>
     </ol>
   </nav>

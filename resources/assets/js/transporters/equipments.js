@@ -33,13 +33,13 @@ $(function () {
         data: null, className: 'text-center', orderable: false,
         render: (data, type, full) => `
           <div class="d-flex justify-content-center gap-1">
-            <button class="btn btn-sm btn-icon btn-outline-secondary btn-edit"
+            <button class="btn btn-sm btn-icon btn-outline-secondary btn-edit-equipment"
               data-id="${full.id}" data-desc="${full.description}"
               data-plate="${full.plate_number === '—' ? '' : full.plate_number}"
               data-activo="${full.activo}" title="Editar">
               <i class="ti tabler-edit"></i>
             </button>
-            <button class="btn btn-sm btn-icon btn-outline-danger btn-delete"
+            <button class="btn btn-sm btn-icon btn-outline-danger btn-delete-equipment"
               data-id="${full.id}" data-desc="${full.description}" title="Eliminar">
               <i class="ti tabler-trash"></i>
             </button>
@@ -59,7 +59,7 @@ $(function () {
   });
 
   // ─── Abrir modal para editar ──────────────────────────────────
-  $(document).on('click', '.btn-edit', function () {
+  $(document).on('click', '.btn-edit-equipment', function () {
     $title.text('Editar Equipo');
     $id.val($(this).data('id'));
     $desc.val($(this).data('desc')).removeClass('is-invalid');
@@ -107,7 +107,7 @@ $(function () {
   });
 
   // ─── Eliminar ─────────────────────────────────────────────────
-  $(document).on('click', '.btn-delete', function () {
+  $(document).on('click', '.btn-delete-equipment', function () {
     const id   = $(this).data('id');
     const desc = $(this).data('desc');
 

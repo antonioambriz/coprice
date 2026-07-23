@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $.get(baseUrl + 'remisions/withdrawals/' + generatorId, function (data) {
       $sel.empty();
       if (!data.length) {
-        $sel.select2({ placeholder: 'No hay retiros disponibles', allowClear: true, width: '100%' });
+        $sel.select2({ placeholder: 'No hay entradas disponibles', allowClear: true, width: '100%' });
         return;
       }
       data.forEach(w => {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ));
       });
       $sel.prop('disabled', false)
-          .select2({ placeholder: '— Seleccionar retiros —', allowClear: true, width: '100%' })
+          .select2({ placeholder: '— Seleccionar entradas —', allowClear: true, width: '100%' })
           .trigger('change');
     });
   }

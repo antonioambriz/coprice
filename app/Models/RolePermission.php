@@ -25,7 +25,7 @@ class RolePermission extends Model
         'final-destinations'=> ['label' => 'Destinos Finales',      'icon' => 'tabler-map-pin',            'system' => false],
         'manifests'         => ['label' => 'Manifiestos',           'icon' => 'tabler-file-text',          'system' => false],
         'remisions'         => ['label' => 'Remisiones',            'icon' => 'tabler-receipt',            'system' => false],
-        'withdrawals'       => ['label' => 'Retiros',               'icon' => 'tabler-file-invoice',       'system' => false],
+        'withdrawals'       => ['label' => 'Entradas',              'icon' => 'tabler-file-invoice',       'system' => false],
         'users'             => ['label' => 'Usuarios',              'icon' => 'tabler-users',              'system' => true],
         'permissions'       => ['label' => 'Permisos de acceso',    'icon' => 'tabler-shield-lock',        'system' => true],
     ];

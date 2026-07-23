@@ -170,6 +170,8 @@ use App\Http\Controllers\TransporterController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransportEquipmentController;
+use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FinalDestinationController;
 use App\Http\Controllers\ManifestController;
 use App\Http\Controllers\RemisionController;
@@ -203,6 +205,12 @@ Route::prefix('reports')->name('reports.')->middleware('permission')->group(func
 
 Route::resource('generators', GeneratorController::class)->middleware('permission');
 
+// Catálogo de contactos (anidado bajo generadores)
+Route::get('generators/{generator}/contacts/get-data', [ContactController::class, 'getData'])->name('generators.contacts.get-data')->middleware('permission');
+Route::post('generators/{generator}/contacts', [ContactController::class, 'store'])->name('generators.contacts.store')->middleware('permission');
+Route::put('generators/{generator}/contacts/{contact}', [ContactController::class, 'update'])->name('generators.contacts.update')->middleware('permission');
+Route::delete('generators/{generator}/contacts/{contact}', [ContactController::class, 'destroy'])->name('generators.contacts.destroy')->middleware('permission');
+
 Route::middleware(['role:SUPERADMIN', 'permission'])->group(function () {
     Route::get('users/get-data', [UserController::class, 'getData'])->name('users.get-data');
     Route::resource('users', UserController::class);
@@ -212,9 +220,15 @@ Route::get('clients/get-data', [ClientController::class, 'getData'])->name('clie
 Route::post('clients/{client}/generator-wastes', [ClientController::class, 'saveGeneratorWastes'])->name('clients.generator-wastes.save')->middleware('permission');
 Route::resource('clients', ClientController::class)->middleware('permission');
 
-// Matrices de precios por residuo (por transportista)
-Route::get('transporters/{transporter}/waste-prices',  [WastePriceController::class, 'forTransporter'])->name('waste-prices.transporter')->middleware('permission');
-Route::post('transporters/{transporter}/waste-prices', [WastePriceController::class, 'saveTransporter'])->name('waste-prices.saveTransporter')->middleware('permission');
+// Catálogo de contactos (anidado bajo clientes)
+Route::get('clients/{client}/contacts/get-data', [ContactController::class, 'getData'])->name('clients.contacts.get-data')->middleware('permission');
+Route::post('clients/{client}/contacts', [ContactController::class, 'store'])->name('clients.contacts.store')->middleware('permission');
+Route::put('clients/{client}/contacts/{contact}', [ContactController::class, 'update'])->name('clients.contacts.update')->middleware('permission');
+Route::delete('clients/{client}/contacts/{contact}', [ContactController::class, 'destroy'])->name('clients.contacts.destroy')->middleware('permission');
+
+// Matrices de precios por residuo (por cliente)
+Route::get('clients/{client}/waste-prices',  [WastePriceController::class, 'forClient'])->name('waste-prices.client')->middleware('permission');
+Route::post('clients/{client}/waste-prices', [WastePriceController::class, 'saveClient'])->name('waste-prices.saveClient')->middleware('permission');
 
 // Rutas para DataTables (Deben ir ARRIBA de los resource)
 Route::get('wastes/get-data', [WasteController::class, 'getData'])->name('wastes.getData')->middleware('permission');
@@ -232,6 +246,18 @@ Route::get('transporters/{transporter}/equipments/get-data', [TransportEquipment
 Route::post('transporters/{transporter}/equipments', [TransportEquipmentController::class, 'store'])->name('transport-equipments.store')->middleware('permission');
 Route::put('transporters/{transporter}/equipments/{equipment}', [TransportEquipmentController::class, 'update'])->name('transport-equipments.update')->middleware('permission');
 Route::delete('transporters/{transporter}/equipments/{equipment}', [TransportEquipmentController::class, 'destroy'])->name('transport-equipments.destroy')->middleware('permission');
+
+// Catálogo de operadores (anidado bajo transportistas)
+Route::get('transporters/{transporter}/operators/get-data', [OperatorController::class, 'getData'])->name('operators.get-data')->middleware('permission');
+Route::post('transporters/{transporter}/operators', [OperatorController::class, 'store'])->name('operators.store')->middleware('permission');
+Route::put('transporters/{transporter}/operators/{operator}', [OperatorController::class, 'update'])->name('operators.update')->middleware('permission');
+Route::delete('transporters/{transporter}/operators/{operator}', [OperatorController::class, 'destroy'])->name('operators.destroy')->middleware('permission');
+
+// Catálogo de contactos (anidado bajo transportistas)
+Route::get('transporters/{transporter}/contacts/get-data', [ContactController::class, 'getData'])->name('transporters.contacts.get-data')->middleware('permission');
+Route::post('transporters/{transporter}/contacts', [ContactController::class, 'store'])->name('transporters.contacts.store')->middleware('permission');
+Route::put('transporters/{transporter}/contacts/{contact}', [ContactController::class, 'update'])->name('transporters.contacts.update')->middleware('permission');
+Route::delete('transporters/{transporter}/contacts/{contact}', [ContactController::class, 'destroy'])->name('transporters.contacts.destroy')->middleware('permission');
 
 // Rutas para Destinos Finales
 Route::get('final-destinations/get-data', [FinalDestinationController::class, 'getData'])->name('final-destinations.get-data')->middleware('permission');
@@ -255,6 +281,7 @@ Route::get('withdrawals/export-excel', [WithdrawalController::class, 'exportExce
 Route::get('withdrawals/export-sama', [WithdrawalController::class, 'exportSama'])->name('withdrawals.exportSama')->middleware('permission');
 Route::get('withdrawals/sub-generators/{generator}', [WithdrawalController::class, 'getSubGenerators'])->name('withdrawals.subGenerators')->middleware('permission');
 Route::get('withdrawals/transport-equipments/{transporter}', [WithdrawalController::class, 'getTransportEquipments'])->name('withdrawals.transportEquipments')->middleware('permission');
+Route::get('withdrawals/operators/{transporter}', [WithdrawalController::class, 'getOperators'])->name('withdrawals.operators')->middleware('permission');
 Route::resource('withdrawals', WithdrawalController::class)->middleware('permission');
 
 Route::get('/dashboard/analytics', [Analytics::class, 'index'])->name('dashboard-analytics');

@@ -12,6 +12,7 @@ $(function () {
   const equipmentSwitch    = $('#requiresTransportEquipment');
   const equipmentRow       = $('#transportEquipmentRow');
   const equipmentSel       = $('#transportEquipmentSelect');
+  const operatorSel        = $('#operatorSelect');
   const manifestSwitch     = $('#requiresManifest');
 
   // ─── FLATPICKR ───────────────────────────────────────────────
@@ -139,10 +140,24 @@ $(function () {
 
   equipmentSwitch.on('change', function () { toggleEquipmentRow(null); });
 
+  // ─── CARGA DINÁMICA DE OPERADORES ────────────────────────────
+  function loadOperators(transporterId, selectId) {
+    operatorSel.empty().append('<option value="">— Seleccionar operador —</option>');
+    if (!transporterId) return;
+
+    $.get(baseUrl + 'withdrawals/operators/' + transporterId, function (data) {
+      $.each(data, function (_i, op) {
+        const label = op.license_number ? op.name + ' (' + op.license_number + ')' : op.name;
+        operatorSel.append($('<option>', { value: op.id, text: label, selected: op.id === selectId }));
+      });
+    });
+  }
+
   transporterSel.on('change', function () {
     if (equipmentSwitch.is(':checked')) {
       loadTransportEquipments($(this).val(), null);
     }
+    loadOperators($(this).val(), null);
   });
 
   // ─── FILAS DE RESIDUOS ────────────────────────────────────────
@@ -193,6 +208,10 @@ $(function () {
 
   if (equipmentSwitch.is(':checked') && transporterSel.val()) {
     toggleEquipmentRow(existingTransportId);
+  }
+
+  if (transporterSel.val()) {
+    loadOperators(transporterSel.val(), existingOperatorId);
   }
 
   if (existingItems && existingItems.length > 0) {

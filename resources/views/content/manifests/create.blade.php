@@ -102,7 +102,7 @@
         {{-- RETIROS --}}
         <div class="card shadow-none border mt-4">
           <div class="card-body">
-            <p class="section-label mb-3">Retiros a vincular</p>
+            <p class="section-label mb-3">Entradas a vincular</p>
             <div class="mb-3">
               <label class="form-label">Período</label>
               <div class="input-group">
@@ -128,7 +128,7 @@
               placeholder="— Selecciona un generador primero —"
               disabled>
             </select>
-            <small class="text-muted mt-1 d-block">Selecciona el generador para cargar sus retiros disponibles. Puedes buscar por folio.</small>
+            <small class="text-muted mt-1 d-block">Selecciona el generador para cargar sus entradas disponibles. Puedes buscar por folio.</small>
           </div>
         </div>
 

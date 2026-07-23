@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       columns: [
         { data: 'id', width: '5%', className: 'text-center' },
         { data: 'company_name', width: '30%' },
-        { data: 'rfc', width: '15%' },
+        { data: 'authorization', width: '15%' },
         { data: 'address', width: '30%' },
         { data: 'status', width: '10%', className: 'text-center' },
         { data: null, width: '10%', className: 'text-center', orderable: false, searchable: false }

@@ -7,7 +7,7 @@
     <ol class="breadcrumb breadcrumb-custom-icon">
       <li class="breadcrumb-item"><a href="{{ route('dashboard-analytics') }}">Inicio</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
-      <li class="breadcrumb-item"><a href="{{ route('generators.index') }}">Generadores</a>
+      <li class="breadcrumb-item"><a href="{{ route('clients.index') }}">Clientes</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
       <li class="breadcrumb-item"><a href="{{ $backRoute }}">Editar</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>

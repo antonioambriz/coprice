@@ -3,9 +3,19 @@
 @section('title', 'Nuevo Transportista')
 
 @section('content')
-  <h4 class="fw-bold py-3 mb-4">
-    <span class="text-muted fw-light">Transportistas /</span> Crear Nuevo
-  </h4>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-custom-icon">
+      <li class="breadcrumb-item">
+        <a href="{{ route('dashboard-analytics') }}">Inicio</a>
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item">
+        Catálogos
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item active">Transportistas</li>
+    </ol>
+  </nav>
 
   <div class="row">
     <div class="col-md-12">

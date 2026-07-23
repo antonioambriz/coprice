@@ -3,16 +3,41 @@
 @section('title', 'Editar Cliente')
 
 @section('vendor-style')
-  @vite(['resources/assets/vendor/libs/sweetalert2/sweetalert2.scss'])
+  @vite([
+    'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
+    'resources/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.scss',
+    'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss',
+  ])
 @endsection
 @section('vendor-script')
-  @vite(['resources/assets/vendor/libs/sweetalert2/sweetalert2.js'])
+  @vite([
+    'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
+    'resources/assets/vendor/libs/sweetalert2/sweetalert2.js',
+  ])
+@endsection
+
+@section('page-style')
+<style>
+  #contactsTable_wrapper > .row:not(.dt-layout-table) {
+    padding-inline: 1.5rem;
+  }
+</style>
 @endsection
 
 @section('content')
-  <h4 class="fw-bold py-3 mb-4">
-    <span class="text-muted fw-light">Clientes /</span> Editar: {{ $client->company_name }}
-  </h4>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-custom-icon">
+      <li class="breadcrumb-item">
+        <a href="{{ route('dashboard-analytics') }}">Inicio</a>
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item">
+        Catálogos
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item active">Clientes</li>
+    </ol>
+  </nav>
 
   @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show">
@@ -67,21 +92,100 @@
             @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
           </div>
 
-          <div class="mb-3 col-md-12">
-            <label for="address" class="form-label">Dirección</label>
-            <textarea class="form-control @error('address') is-invalid @enderror" id="address"
-              name="address" rows="2">{{ old('address', $client->address) }}</textarea>
-            @error('address')<div class="invalid-feedback">{{ $message }}</div>@enderror
+        </div>
+
+        <hr class="my-4">
+        <h6 class="mb-3">Dirección Fiscal</h6>
+        <div class="row">
+
+          <div class="mb-3 col-md-4">
+            <label for="street" class="form-label">Calle</label>
+            <input class="form-control @error('street') is-invalid @enderror" type="text" id="street"
+              name="street" value="{{ old('street', $client->street) }}" />
+            @error('street')<div class="invalid-feedback">{{ $message }}</div>@enderror
+          </div>
+
+          <div class="mb-3 col-md-2">
+            <label for="ext_number" class="form-label">No. Ext</label>
+            <input class="form-control @error('ext_number') is-invalid @enderror" type="text" id="ext_number"
+              name="ext_number" value="{{ old('ext_number', $client->ext_number) }}" />
+            @error('ext_number')<div class="invalid-feedback">{{ $message }}</div>@enderror
+          </div>
+
+          <div class="mb-3 col-md-2">
+            <label for="int_number" class="form-label">No. Int</label>
+            <input class="form-control @error('int_number') is-invalid @enderror" type="text" id="int_number"
+              name="int_number" value="{{ old('int_number', $client->int_number) }}" />
+            @error('int_number')<div class="invalid-feedback">{{ $message }}</div>@enderror
+          </div>
+
+          <div class="mb-3 col-md-4">
+            <label for="municipality" class="form-label">Municipio</label>
+            <input class="form-control @error('municipality') is-invalid @enderror" type="text" id="municipality"
+              name="municipality" value="{{ old('municipality', $client->municipality) }}" />
+            @error('municipality')<div class="invalid-feedback">{{ $message }}</div>@enderror
+          </div>
+
+          <div class="mb-3 col-md-4">
+            <label for="state" class="form-label">Estado</label>
+            <input class="form-control @error('state') is-invalid @enderror" type="text" id="state"
+              name="state" value="{{ old('state', $client->state) }}" />
+            @error('state')<div class="invalid-feedback">{{ $message }}</div>@enderror
+          </div>
+
+          <div class="mb-3 col-md-2">
+            <label for="postal_code" class="form-label">C.P.</label>
+            <input class="form-control @error('postal_code') is-invalid @enderror" type="text" id="postal_code"
+              name="postal_code" value="{{ old('postal_code', $client->postal_code) }}" maxlength="5" />
+            @error('postal_code')<div class="invalid-feedback">{{ $message }}</div>@enderror
+          </div>
+
+          <div class="mb-3 col-md-4">
+            <label for="country" class="form-label">País</label>
+            <input class="form-control @error('country') is-invalid @enderror" type="text" id="country"
+              name="country" value="{{ old('country', $client->country ?? 'México') }}" />
+            @error('country')<div class="invalid-feedback">{{ $message }}</div>@enderror
+          </div>
+
+          <div class="mb-3 col-md-6">
+            <label for="payment_method" class="form-label">Forma de Pago</label>
+            <select class="form-select @error('payment_method') is-invalid @enderror" id="payment_method" name="payment_method">
+              <option value="">— No especificado —</option>
+              @foreach(\App\Models\Client::PAYMENT_METHODS as $code => $label)
+                <option value="{{ $code }}" {{ old('payment_method', $client->payment_method) === $code ? 'selected' : '' }}>{{ $code }} - {{ $label }}</option>
+              @endforeach
+            </select>
+            @error('payment_method')<div class="invalid-feedback">{{ $message }}</div>@enderror
+          </div>
+
+          <div class="mb-3 col-md-6">
+            <label for="credit_days" class="form-label">Condiciones de Crédito</label>
+            <select class="form-select @error('credit_days') is-invalid @enderror" id="credit_days" name="credit_days">
+              <option value="">— No especificado —</option>
+              @foreach(\App\Models\Client::CREDIT_DAYS_OPTIONS as $days)
+                <option value="{{ $days }}" {{ (string) old('credit_days', $client->credit_days) === (string) $days ? 'selected' : '' }}>{{ $days }} días</option>
+              @endforeach
+            </select>
+            @error('credit_days')<div class="invalid-feedback">{{ $message }}</div>@enderror
           </div>
 
         </div>
-        <div class="mt-2 d-flex gap-2">
+        <div class="mt-2 d-flex gap-2 flex-wrap align-items-center">
           <button type="submit" class="btn btn-primary">Actualizar Cliente</button>
           <a href="{{ route('clients.index') }}" class="btn btn-label-secondary">Cancelar</a>
+          <a href="{{ route('waste-prices.client', $client) }}" class="btn btn-outline-primary ms-auto">
+            <i class="ti tabler-currency-dollar me-1"></i> Precios por Residuo
+          </a>
         </div>
       </form>
     </div>
   </div>
+
+  @include('content.contacts._panel', [
+    'contactsGetDataUrl' => route('clients.contacts.get-data', $client),
+    'contactsStoreUrl'   => route('clients.contacts.store', $client),
+    'contactsBaseUrl'    => url('clients/'.$client->id.'/contacts'),
+  ])
 
   {{-- GENERADORES Y RESIDUOS --}}
   <div class="card">
@@ -208,6 +312,11 @@
 <script>
 const SAVE_URL       = "{{ route('clients.generator-wastes.save', $client) }}";
 const CSRF_TOKEN     = "{{ csrf_token() }}";
+
+var contactsGetDataUrl = "{{ route('clients.contacts.get-data', $client) }}";
+var contactsStoreUrl   = "{{ route('clients.contacts.store', $client) }}";
+var contactsBaseUrl    = "{{ url('clients/'.$client->id.'/contacts') }}";
+var csrfToken           = "{{ csrf_token() }}";
 
 const ALL_WASTES = @json($wastes->map(fn($w) => ['id' => $w->id, 'description' => $w->description]));
 const ALL_DESTINATIONS = @json($finalDestinations->map(fn($f) => ['id' => $f->id, 'label' => $f->name . ($f->authorization_number ? ' ('.$f->authorization_number.')' : '')]));
@@ -368,4 +477,5 @@ document.getElementById('btnSaveRelationships').addEventListener('click', () => 
   .catch(() => showToast('Error de conexión.', 'error'));
 });
 </script>
+@vite(['resources/assets/js/contacts/panel.js'])
 @endsection

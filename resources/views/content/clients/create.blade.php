@@ -3,17 +3,27 @@
 @section('title', 'Nuevo Cliente')
 
 @section('content')
-  <h4 class="fw-bold py-3 mb-4">
-    <span class="text-muted fw-light">Clientes /</span> Crear Nuevo
-  </h4>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-custom-icon">
+      <li class="breadcrumb-item">
+        <a href="{{ route('dashboard-analytics') }}">Inicio</a>
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item">
+        Catálogos
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item active">Clientes</li>
+    </ol>
+  </nav>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card mb-4">
-        <h5 class="card-header">Datos del Nuevo Cliente</h5>
-        <div class="card-body">
-          <form action="{{ route('clients.store') }}" method="POST">
-            @csrf
+  <form action="{{ route('clients.store') }}" method="POST">
+    @csrf
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-4">
+          <h5 class="card-header">Datos del Nuevo Cliente</h5>
+          <div class="card-body">
             <div class="row">
 
               <div class="mb-3 col-md-6">
@@ -52,21 +62,95 @@
                 </div>
               </div>
 
-              <div class="mb-3 col-md-12">
-                <label for="address" class="form-label">Dirección</label>
-                <textarea class="form-control @error('address') is-invalid @enderror" id="address"
-                  name="address" rows="2" placeholder="CALLE, NÚMERO, COLONIA, CP, CIUDAD">{{ old('address') }}</textarea>
-                @error('address')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <h5 class="card-header">Dirección Fiscal</h5>
+          <div class="card-body">
+            <div class="row">
+
+              <div class="mb-3 col-md-4">
+                <label for="street" class="form-label">Calle</label>
+                <input class="form-control @error('street') is-invalid @enderror" type="text" id="street"
+                  name="street" value="{{ old('street') }}" />
+                @error('street')<div class="invalid-feedback">{{ $message }}</div>@enderror
+              </div>
+
+              <div class="mb-3 col-md-2">
+                <label for="ext_number" class="form-label">No. Ext</label>
+                <input class="form-control @error('ext_number') is-invalid @enderror" type="text" id="ext_number"
+                  name="ext_number" value="{{ old('ext_number') }}" />
+                @error('ext_number')<div class="invalid-feedback">{{ $message }}</div>@enderror
+              </div>
+
+              <div class="mb-3 col-md-2">
+                <label for="int_number" class="form-label">No. Int</label>
+                <input class="form-control @error('int_number') is-invalid @enderror" type="text" id="int_number"
+                  name="int_number" value="{{ old('int_number') }}" />
+                @error('int_number')<div class="invalid-feedback">{{ $message }}</div>@enderror
+              </div>
+
+              <div class="mb-3 col-md-4">
+                <label for="municipality" class="form-label">Municipio</label>
+                <input class="form-control @error('municipality') is-invalid @enderror" type="text" id="municipality"
+                  name="municipality" value="{{ old('municipality') }}" />
+                @error('municipality')<div class="invalid-feedback">{{ $message }}</div>@enderror
+              </div>
+
+              <div class="mb-3 col-md-4">
+                <label for="state" class="form-label">Estado</label>
+                <input class="form-control @error('state') is-invalid @enderror" type="text" id="state"
+                  name="state" value="{{ old('state') }}" />
+                @error('state')<div class="invalid-feedback">{{ $message }}</div>@enderror
+              </div>
+
+              <div class="mb-3 col-md-2">
+                <label for="postal_code" class="form-label">C.P.</label>
+                <input class="form-control @error('postal_code') is-invalid @enderror" type="text" id="postal_code"
+                  name="postal_code" value="{{ old('postal_code') }}" maxlength="5" />
+                @error('postal_code')<div class="invalid-feedback">{{ $message }}</div>@enderror
+              </div>
+
+              <div class="mb-3 col-md-4">
+                <label for="country" class="form-label">País</label>
+                <input class="form-control @error('country') is-invalid @enderror" type="text" id="country"
+                  name="country" value="{{ old('country', 'México') }}" />
+                @error('country')<div class="invalid-feedback">{{ $message }}</div>@enderror
+              </div>
+
+              <div class="mb-3 col-md-6">
+                <label for="payment_method" class="form-label">Forma de Pago</label>
+                <select class="form-select @error('payment_method') is-invalid @enderror" id="payment_method" name="payment_method">
+                  <option value="">— No especificado —</option>
+                  @foreach(\App\Models\Client::PAYMENT_METHODS as $code => $label)
+                    <option value="{{ $code }}" {{ old('payment_method') === $code ? 'selected' : '' }}>{{ $code }} - {{ $label }}</option>
+                  @endforeach
+                </select>
+                @error('payment_method')<div class="invalid-feedback">{{ $message }}</div>@enderror
+              </div>
+
+              <div class="mb-3 col-md-6">
+                <label for="credit_days" class="form-label">Condiciones de Crédito</label>
+                <select class="form-select @error('credit_days') is-invalid @enderror" id="credit_days" name="credit_days">
+                  <option value="">— No especificado —</option>
+                  @foreach(\App\Models\Client::CREDIT_DAYS_OPTIONS as $days)
+                    <option value="{{ $days }}" {{ (string) old('credit_days') === (string) $days ? 'selected' : '' }}>{{ $days }} días</option>
+                  @endforeach
+                </select>
+                @error('credit_days')<div class="invalid-feedback">{{ $message }}</div>@enderror
               </div>
 
             </div>
+
             <div class="mt-4">
               <button type="submit" class="btn btn-primary me-2">Guardar Cliente</button>
               <a href="{{ route('clients.index') }}" class="btn btn-label-secondary">Cancelar</a>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 @endsection

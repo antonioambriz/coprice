@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Editar Retiro ' . $withdrawal->folio_interno . ' - Coprice')
+@section('title', 'Editar Entrada ' . $withdrawal->folio_interno . ' - Coprice')
 
 @section('vendor-style')
   @vite([
@@ -43,7 +43,7 @@
     <ol class="breadcrumb breadcrumb-custom-icon">
       <li class="breadcrumb-item"><a href="{{ route('dashboard-analytics') }}">Inicio</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
-      <li class="breadcrumb-item"><a href="{{ route('withdrawals.index') }}">Bitácora de Retiros</a>
+      <li class="breadcrumb-item"><a href="{{ route('withdrawals.index') }}">Bitácora de Entradas</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
       <li class="breadcrumb-item"><a href="{{ route('withdrawals.show', $withdrawal) }}">{{ $withdrawal->folio_interno }}</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
@@ -126,7 +126,7 @@
             {{-- PARTES --}}
             <p class="section-label mb-3">Partes</p>
             <div class="row g-3">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label class="form-label">Generador</label>
                 <select name="generator_id" id="generatorSelect" class="select2 form-select" required>
                   <option value=""></option>
@@ -150,7 +150,7 @@
                   </small>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label class="form-label">Transportista</label>
                 <select name="transporter_id" id="transporterSelect" class="select2 form-select" required>
                   <option value=""></option>
@@ -167,6 +167,23 @@
                     <option value="">— Seleccionar equipo —</option>
                   </select>
                 </div>
+                <div id="operatorRow" class="mt-2">
+                  <label class="form-label">Operador</label>
+                  <select name="operator_id" id="operatorSelect" class="form-select">
+                    <option value="">— Seleccionar operador —</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Cliente</label>
+                <select name="client_id" id="clientSelect" class="select2 form-select" required>
+                  <option value=""></option>
+                  @foreach ($clients as $c)
+                    <option value="{{ $c->id }}" {{ old('client_id', $withdrawal->client_id) == $c->id ? 'selected' : '' }}>
+                      {{ $c->company_name }}
+                    </option>
+                  @endforeach
+                </select>
               </div>
             </div>
 
@@ -327,6 +344,7 @@
     var existingItems       = @json($existingItems);
     var existingSubGenId    = {{ $withdrawal->sub_generator_id ?? 'null' }};
     var existingTransportId = {{ $withdrawal->transport_equipment_id ?? 'null' }};
+    var existingOperatorId  = {{ $withdrawal->operator_id ?? 'null' }};
   </script>
 @endsection
 

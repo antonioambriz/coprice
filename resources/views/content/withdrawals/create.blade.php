@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Nuevo Retiro - Coprice')
+@section('title', 'Nueva Entrada - Coprice')
 
 @section('vendor-style')
   @vite([
@@ -43,9 +43,9 @@
     <ol class="breadcrumb breadcrumb-custom-icon">
       <li class="breadcrumb-item"><a href="{{ route('dashboard-analytics') }}">Inicio</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
-      <li class="breadcrumb-item"><a href="{{ route('withdrawals.index') }}">Bitácora de Retiros</a>
+      <li class="breadcrumb-item"><a href="{{ route('withdrawals.index') }}">Bitácora de Entradas</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
-      <li class="breadcrumb-item active">Nuevo Retiro</li>
+      <li class="breadcrumb-item active">Nueva Entrada</li>
     </ol>
   </nav>
 
@@ -119,7 +119,7 @@
             {{-- PARTES --}}
             <p class="section-label mb-3">Partes</p>
             <div class="row g-3">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label class="form-label">Generador</label>
                 <select name="generator_id" id="generatorSelect" class="select2 form-select" required>
                   <option value=""></option>
@@ -143,7 +143,7 @@
                   </small>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label class="form-label">Transportista</label>
                 <select name="transporter_id" id="transporterSelect" class="select2 form-select" required>
                   <option value=""></option>
@@ -161,6 +161,23 @@
                     <option value="">— Seleccionar equipo —</option>
                   </select>
                 </div>
+                <div id="operatorRow" class="mt-2">
+                  <label class="form-label">Operador</label>
+                  <select name="operator_id" id="operatorSelect" class="form-select">
+                    <option value="">— Seleccionar operador —</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Cliente</label>
+                <select name="client_id" id="clientSelect" class="select2 form-select" required>
+                  <option value=""></option>
+                  @foreach ($clients as $c)
+                    <option value="{{ $c->id }}" {{ old('client_id') == $c->id ? 'selected' : '' }}>
+                      {{ $c->company_name }}
+                    </option>
+                  @endforeach
+                </select>
               </div>
             </div>
 
@@ -237,7 +254,7 @@
           </div>
           <div class="card-footer bg-transparent">
             <button type="submit" class="btn btn-primary w-100">
-              <i class="ti tabler-device-floppy me-1"></i> Guardar Retiro
+              <i class="ti tabler-device-floppy me-1"></i> Guardar Entrada
             </button>
             <a href="{{ route('withdrawals.index') }}" class="btn btn-outline-secondary w-100 mt-2">
               Cancelar

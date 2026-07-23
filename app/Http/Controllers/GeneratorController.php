@@ -29,7 +29,7 @@ class GeneratorController extends Controller
     {
         $request->validate([
             'company_name'                          => 'required|string|max:255',
-            'rfc'                                   => 'nullable|string|max:13',
+            'authorization'                         => 'nullable|string|max:13',
             'address'                               => 'nullable|string',
             'preferred_transporter_id'              => 'nullable|exists:transporters,id',
             'sub_generators.*.name'                 => 'required_if:has_sub_generators,1|string|max:255',
@@ -40,7 +40,7 @@ class GeneratorController extends Controller
         DB::transaction(function () use ($request) {
             $generator = Generator::create([
                 'company_name'             => $request->company_name,
-                'rfc'                      => $request->rfc,
+                'authorization'            => $request->authorization,
                 'address'                  => $request->address,
                 'has_sub_generators'       => $request->boolean('has_sub_generators'),
                 'requires_manifest'        => $request->boolean('requires_manifest'),
@@ -78,7 +78,7 @@ class GeneratorController extends Controller
     {
         $request->validate([
             'company_name'                          => 'required|max:255',
-            'rfc'                                   => 'nullable|max:13',
+            'authorization'                         => 'nullable|max:13',
             'address'                               => 'nullable',
             'preferred_transporter_id'              => 'nullable|exists:transporters,id',
             'sub_generators.*.name'                 => 'required_if:has_sub_generators,1|string|max:255',
@@ -89,7 +89,7 @@ class GeneratorController extends Controller
         DB::transaction(function () use ($request, $generator) {
             $generator->update([
                 'company_name'             => $request->company_name,
-                'rfc'                      => $request->rfc,
+                'authorization'            => $request->authorization,
                 'address'                  => $request->address,
                 'has_sub_generators'       => $request->boolean('has_sub_generators'),
                 'requires_manifest'        => $request->boolean('requires_manifest'),

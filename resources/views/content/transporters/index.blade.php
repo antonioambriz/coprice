@@ -24,6 +24,10 @@
         <a href="{{ route('dashboard-analytics') }}">Inicio</a>
         <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
       </li>
+      <li class="breadcrumb-item">
+        Catálogos
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
       <li class="breadcrumb-item active">Transportistas</li>
     </ol>
   </nav>

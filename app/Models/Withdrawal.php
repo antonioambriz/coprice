@@ -20,6 +20,7 @@ class Withdrawal extends Model
         'generator_id',
         'sub_generator_id',
         'transporter_id',
+        'client_id',
         'manifest_id',
         'remision_id',
         'reception_date',
@@ -28,6 +29,7 @@ class Withdrawal extends Model
         'requires_manifest',
         'requires_transport_equipment',
         'transport_equipment_id',
+        'operator_id',
         'treatment_stage',
         'final_destination_id',
         'payment_status',
@@ -62,6 +64,11 @@ class Withdrawal extends Model
         return $this->belongsTo(Transporter::class);
     }
 
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
     public function manifest()
     {
         return $this->belongsTo(Manifest::class);
@@ -80,6 +87,11 @@ class Withdrawal extends Model
     public function transportEquipment()
     {
         return $this->belongsTo(TransportEquipment::class);
+    }
+
+    public function operator()
+    {
+        return $this->belongsTo(Operator::class);
     }
 
     public function items()

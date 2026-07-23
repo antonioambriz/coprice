@@ -12,6 +12,7 @@ $(function () {
   const equipmentSwitch   = $('#requiresTransportEquipment');
   const equipmentRow      = $('#transportEquipmentRow');
   const equipmentSel      = $('#transportEquipmentSelect');
+  const operatorSel       = $('#operatorSelect');
   const manifestSwitch    = $('#requiresManifest');
 
   // ─── FLATPICKR ───────────────────────────────────────────────
@@ -128,14 +129,29 @@ $(function () {
 
   equipmentSwitch.on('change', toggleEquipmentRow);
 
+  // ─── CARGA DINÁMICA DE OPERADORES ────────────────────────────
+  function loadOperators(transporterId) {
+    operatorSel.empty().append('<option value="">— Seleccionar operador —</option>');
+    if (!transporterId) return;
+
+    $.get(baseUrl + 'withdrawals/operators/' + transporterId, function (data) {
+      $.each(data, function (_i, op) {
+        const label = op.license_number ? op.name + ' (' + op.license_number + ')' : op.name;
+        operatorSel.append($('<option>', { value: op.id, text: label }));
+      });
+    });
+  }
+
   transporterSel.on('change', function () {
     if (equipmentSwitch.is(':checked')) {
       loadTransportEquipments($(this).val());
     }
+    loadOperators($(this).val());
   });
 
   // Si viene marcado por old() al recargar con errores
   if (equipmentSwitch.is(':checked')) toggleEquipmentRow();
+  if (transporterSel.val()) loadOperators(transporterSel.val());
 
   // ─── CAPACIDADES POR TIPO DE ENVASADO ────────────────────────
   const CONTAINER_CAPACITIES = {

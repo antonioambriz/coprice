@@ -99,13 +99,13 @@
         {{-- RETIROS --}}
         <div class="card shadow-none border mt-4">
           <div class="card-body">
-            <p class="section-label mb-3">Retiros vinculados</p>
+            <p class="section-label mb-3">Entradas vinculadas</p>
             <select name="withdrawal_ids[]" id="withdrawalsSelect"
               class="form-select" multiple
-              placeholder="Cargando retiros...">
+              placeholder="Cargando entradas...">
             </select>
             <div class="d-flex justify-content-between mt-2">
-              <small class="text-muted">Retiros sin remisión + los ya vinculados a esta remisión.</small>
+              <small class="text-muted">Entradas sin remisión + las ya vinculadas a esta remisión.</small>
               <small class="fw-semibold">Total: $<span id="totalDisplay">{{ number_format($remision->total, 2) }}</span></small>
             </div>
           </div>

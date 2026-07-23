@@ -25,12 +25,12 @@ class Analytics extends Controller
             return ['found' => false];
         }
 
-        // Retiros pendientes de remisionar agrupados por residuo, transportista y unidad
+        // Retiros pendientes de remisionar agrupados por residuo, cliente y unidad
         $items = WithdrawalItem::select([
                 'wastes.description as waste_name',
                 'withdrawal_items.waste_id',
                 'withdrawal_items.unit',
-                'withdrawals.transporter_id',
+                'withdrawals.client_id',
                 DB::raw('SUM(withdrawal_items.quantity) as total_qty'),
             ])
             ->join('withdrawals', 'withdrawal_items.withdrawal_id', '=', 'withdrawals.id')
@@ -39,15 +39,17 @@ class Analytics extends Controller
             ->whereNull('withdrawal_items.deleted_at')
             ->where('withdrawals.sub_generator_id', $petar->id)
             ->whereNull('withdrawals.remision_id')
-            ->groupBy('withdrawal_items.waste_id', 'wastes.description', 'withdrawal_items.unit', 'withdrawals.transporter_id')
+            ->groupBy('withdrawal_items.waste_id', 'wastes.description', 'withdrawal_items.unit', 'withdrawals.client_id')
             ->orderBy('wastes.description')
             ->get();
 
-        // Precios acordados indexados por (transporter_id, waste_id)
-        $transporterIds = $items->pluck('transporter_id')->unique()->filter();
-        $agreedPrices   = WastePrice::whereIn('transporter_id', $transporterIds)
+        // Precios acordados indexados por (client_id, waste_id). Retiros legado
+        // sin client_id simplemente no calzan ninguna llave aquí y caen al
+        // precio base de Waste::default_price más abajo.
+        $clientIds    = $items->pluck('client_id')->unique()->filter();
+        $agreedPrices = WastePrice::whereIn('client_id', $clientIds)
             ->get()
-            ->keyBy(fn($p) => $p->transporter_id . '_' . $p->waste_id);
+            ->keyBy(fn($p) => $p->client_id . '_' . $p->waste_id);
 
         // Precios por defecto del residuo como fallback
         $defaultPrices = \App\Models\Waste::whereIn('id', $items->pluck('waste_id'))
@@ -65,7 +67,7 @@ class Analytics extends Controller
                 default => (float) $item->total_qty / 1000,
             };
 
-            $key     = $item->transporter_id . '_' . $item->waste_id;
+            $key     = $item->client_id . '_' . $item->waste_id;
             $price   = $agreedPrices[$key]->price_per_ton ?? $defaultPrices[$item->waste_id] ?? 0;
             $importe = $tons * $price;
             $total  += $importe;

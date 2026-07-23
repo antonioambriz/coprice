@@ -2,14 +2,41 @@
 
 @section('title', 'Editar Generador')
 
+@section('vendor-style')
+  @vite([
+    'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
+    'resources/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.scss',
+    'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss',
+  ])
+@endsection
+
+@section('vendor-script')
+  @vite([
+    'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
+    'resources/assets/vendor/libs/sweetalert2/sweetalert2.js',
+  ])
+@endsection
+
+@section('page-style')
+<style>
+  #contactsTable_wrapper > .row:not(.dt-layout-table) {
+    padding-inline: 1.5rem;
+  }
+</style>
+@endsection
+
 @section('content')
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb breadcrumb-custom-icon">
-      <li class="breadcrumb-item"><a href="{{ route('dashboard-analytics') }}">Inicio</a><i
-          class="ti tabler-chevron-right"></i></li>
-      <li class="breadcrumb-item"><a href="{{ route('generators.index') }}">Generadores</a><i
-          class="ti tabler-chevron-right"></i></li>
-      <li class="breadcrumb-item active">Editar</li>
+      <li class="breadcrumb-item">
+        <a href="{{ route('dashboard-analytics') }}">Inicio</a>
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item">
+        Catálogos
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
+      </li>
+      <li class="breadcrumb-item active">Generadores</li>
     </ol>
   </nav>
 
@@ -33,8 +60,8 @@
             @enderror
           </div>
           <div class="col-md-6">
-            <label class="form-label">RFC</label>
-            <input type="text" name="rfc" class="form-control" value="{{ old('rfc', $generator->rfc) }}" maxlength="13">
+            <label class="form-label">Autorización</label>
+            <input type="text" name="authorization" class="form-control" value="{{ old('authorization', $generator->authorization) }}" maxlength="13">
           </div>
           <div class="col-12">
             <label class="form-label">Dirección</label>
@@ -151,6 +178,24 @@
     </div>
   </div>
 
+  @include('content.contacts._panel', [
+    'contactsGetDataUrl' => route('generators.contacts.get-data', $generator),
+    'contactsStoreUrl'   => route('generators.contacts.store', $generator),
+    'contactsBaseUrl'    => url('generators/'.$generator->id.'/contacts'),
+  ])
+
+  {{-- Toast --}}
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="globalToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <i class="ti tabler-check text-success me-2"></i>
+        <strong class="me-auto">Coprice</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+      </div>
+      <div class="toast-body" id="globalToastBody"></div>
+    </div>
+  </div>
+
   <script type="text/template" id="subGenRowTemplate">
     <tr>
       <input type="hidden" name="sub_generators[__INDEX__][id]" value="">
@@ -179,4 +224,12 @@
 
 @section('page-script')
   @vite(['resources/assets/js/generators/edit.js'])
+
+  <script>
+    var contactsGetDataUrl = "{{ route('generators.contacts.get-data', $generator) }}";
+    var contactsStoreUrl   = "{{ route('generators.contacts.store', $generator) }}";
+    var contactsBaseUrl    = "{{ url('generators/'.$generator->id.'/contacts') }}";
+    var csrfToken           = "{{ csrf_token() }}";
+  </script>
+  @vite(['resources/assets/js/contacts/panel.js'])
 @endsection

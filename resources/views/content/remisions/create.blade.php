@@ -96,14 +96,14 @@
         {{-- RETIROS --}}
         <div class="card shadow-none border mt-4">
           <div class="card-body">
-            <p class="section-label mb-3">Retiros a vincular</p>
+            <p class="section-label mb-3">Entradas a vincular</p>
             <select name="withdrawal_ids[]" id="withdrawalsSelect"
               class="form-select" multiple
               placeholder="— Selecciona un generador primero —"
               disabled>
             </select>
             <div class="d-flex justify-content-between mt-2">
-              <small class="text-muted">Retiros sin remisión del generador seleccionado. Puedes buscar por folio.</small>
+              <small class="text-muted">Entradas sin remisión del generador seleccionado. Puedes buscar por folio.</small>
               <small class="fw-semibold">Total: $<span id="totalDisplay">0.00</span></small>
             </div>
           </div>

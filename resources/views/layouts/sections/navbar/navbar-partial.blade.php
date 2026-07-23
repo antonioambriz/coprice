@@ -128,7 +128,7 @@ $roleMeta = $roleLabels[$userRole] ?? ['label' => $userRole, 'class' => 'text-se
               <span class="dropdown-shortcuts-icon rounded-circle mb-3">
                 <i class="icon-base ti tabler-file-invoice icon-26px text-heading"></i>
               </span>
-              <a href="{{ url('withdrawals') }}" class="stretched-link">Retiros</a>
+              <a href="{{ url('withdrawals') }}" class="stretched-link">Entradas</a>
               <small>Documentos</small>
             </div>
           </div>

@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Bitácora de Retiros - Coprice')
+@section('title', 'Bitácora de Entradas - Coprice')
 
 @section('vendor-style')
   @vite([
@@ -28,13 +28,13 @@
     <ol class="breadcrumb breadcrumb-custom-icon">
       <li class="breadcrumb-item"><a href="{{ route('dashboard-analytics') }}">Inicio</a>
         <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
-      <li class="breadcrumb-item active">Bitácora de Retiros</li>
+      <li class="breadcrumb-item active">Bitácora de Entradas</li>
     </ol>
   </nav>
 
   <div class="card">
     <div class="card-header border-bottom d-flex justify-content-between align-items-center">
-      <h5 class="card-title mb-0">Bitácora de Retiros</h5>
+      <h5 class="card-title mb-0">Bitácora de Entradas</h5>
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalSama">
           <i class="ti tabler-file-certificate me-1"></i> Reporte SAMA

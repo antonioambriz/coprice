@@ -43,7 +43,7 @@ $configData = Helper::appClasses();
             <i class="ti tabler-building-factory-2 me-2 text-primary"></i>
             Importe Acumulado — {{ $petarWidget['name'] }}
           </h5>
-          <small class="text-muted">Retiros pendientes de remisionar · precio por kg según acuerdo</small>
+          <small class="text-muted">Entradas pendientes de remisionar · precio por kg según acuerdo</small>
         </div>
         <div class="text-end">
           <div class="text-muted small">Total acumulado</div>
@@ -82,7 +82,7 @@ $configData = Helper::appClasses();
       @else
       <div class="card-body text-center text-muted py-4">
         <i class="ti tabler-inbox icon-lg mb-2 d-block"></i>
-        Sin retiros pendientes de remisionar.
+        Sin entradas pendientes de remisionar.
       </div>
       @endif
     </div>

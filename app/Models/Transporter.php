@@ -31,8 +31,13 @@ class Transporter extends Model
         return $this->hasMany(TransportEquipment::class);
     }
 
-    public function wastePrices()
+    public function operators()
     {
-        return $this->hasMany(WastePrice::class);
+        return $this->hasMany(Operator::class);
+    }
+
+    public function contacts()
+    {
+        return $this->morphMany(Contact::class, 'contactable');
     }
 }

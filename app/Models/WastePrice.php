@@ -9,7 +9,7 @@ class WastePrice extends Model
     protected $table = 'waste_prices';
 
     protected $fillable = [
-        'transporter_id',
+        'client_id',
         'waste_id',
         'price_per_ton',
     ];
@@ -18,9 +18,9 @@ class WastePrice extends Model
         'price_per_ton' => 'decimal:4',
     ];
 
-    public function transporter()
+    public function client()
     {
-        return $this->belongsTo(Transporter::class);
+        return $this->belongsTo(Client::class);
     }
 
     public function waste()

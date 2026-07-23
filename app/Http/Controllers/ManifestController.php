@@ -45,7 +45,7 @@ class ManifestController extends Controller
         }
 
         return redirect()->route('manifests.index')
-            ->with('success', 'Manifiesto creado y retiros vinculados exitosamente.');
+            ->with('success', 'Manifiesto creado y entradas vinculadas exitosamente.');
     }
 
     public function show(Manifest $manifest)

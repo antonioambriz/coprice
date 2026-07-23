@@ -12,7 +12,7 @@ class Generator extends Model
 
     protected $fillable = [
         'company_name',
-        'rfc',
+        'authorization',
         'address',
         'status',
         'has_sub_generators',
@@ -49,5 +49,10 @@ class Generator extends Model
     public function wastes()
     {
         return $this->hasMany(Waste::class);
+    }
+
+    public function contacts()
+    {
+        return $this->morphMany(Contact::class, 'contactable');
     }
 }

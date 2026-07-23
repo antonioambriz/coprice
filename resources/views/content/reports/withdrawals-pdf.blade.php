@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Reporte de Retiros</title>
+<title>Reporte de Entradas</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -109,7 +109,7 @@
 {{-- Encabezado --}}
 <div class="header">
   <div class="header-left">
-    <h1>Reporte de Retiros</h1>
+    <h1>Reporte de Entradas</h1>
     <p>Coprice — Sistema de Gestión de Residuos</p>
   </div>
   <div class="header-right">

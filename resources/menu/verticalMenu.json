@@ -57,7 +57,7 @@
     {
       "url": "withdrawals",
       "icon": "menu-icon icon-base ti tabler-file-invoice",
-      "name": "Retiros",
+      "name": "Entradas",
       "slug": "withdrawals"
     },
     {
@@ -70,7 +70,7 @@
       "submenu": [
         {
           "url": "reports/withdrawals",
-          "name": "Retiros por período",
+          "name": "Entradas por período",
           "slug": "reports-withdrawals",
           "icon": "menu-icon icon-base ti tabler-file-invoice"
         },

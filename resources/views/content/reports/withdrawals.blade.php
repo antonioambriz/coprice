@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Reporte de Retiros - Coprice')
+@section('title', 'Reporte de Entradas - Coprice')
 
 @section('vendor-style')
   @vite([
@@ -26,7 +26,7 @@
   <ol class="breadcrumb breadcrumb-custom-icon">
     <li class="breadcrumb-item"><a href="{{ route('dashboard-analytics') }}">Inicio</a>
       <i class="ti tabler-chevron-right icon-xs mx-2"></i></li>
-    <li class="breadcrumb-item active">Reporte de Retiros</li>
+    <li class="breadcrumb-item active">Reporte de Entradas</li>
   </ol>
 </nav>
 
@@ -118,7 +118,7 @@
     <div>
       <h5 class="mb-0">
         <i class="ti tabler-table me-2 text-success"></i>Resultados
-        <span class="badge bg-label-primary ms-2">{{ $withdrawals->count() }} retiros</span>
+        <span class="badge bg-label-primary ms-2">{{ $withdrawals->count() }} entradas</span>
       </h5>
       @if($withdrawals->isNotEmpty())
       <small class="text-muted">
@@ -170,7 +170,7 @@
     @if($withdrawals->isEmpty())
     <div class="text-center py-5">
       <i class="ti tabler-mood-empty" style="font-size:3rem;color:#ccc"></i>
-      <p class="text-muted mt-2 mb-0">No se encontraron retiros con los filtros seleccionados.</p>
+      <p class="text-muted mt-2 mb-0">No se encontraron entradas con los filtros seleccionados.</p>
     </div>
     @else
     <div class="table-responsive px-3 pb-3">

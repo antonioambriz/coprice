@@ -13,8 +13,8 @@ class CheckPermission
     private const PAGE_ROUTE_MAP = [
         'dashboard'          => ['dashboard-analytics', 'dashboard-crm'],
         'generators'         => ['generators.'],
-        'clients'            => ['clients.'],
-        'transporters'       => ['transporters.', 'transport-equipments.', 'waste-prices.'],
+        'clients'            => ['clients.', 'waste-prices.'],
+        'transporters'       => ['transporters.', 'transport-equipments.', 'operators.'],
         'wastes'             => ['wastes.'],
         'final-destinations' => ['final-destinations.'],
         'manifests'          => ['manifests.'],

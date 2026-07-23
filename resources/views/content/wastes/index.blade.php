@@ -19,11 +19,13 @@
     <ol class="breadcrumb breadcrumb-custom-icon">
       <li class="breadcrumb-item">
         <a href="{{ route('dashboard-analytics') }}">Inicio</a>
-        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs"></i>
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
       </li>
-      <li class="breadcrumb-item active">
-        <a href="javascript:void(0);">Catálogo de Residuos</a>
+      <li class="breadcrumb-item">
+        Catálogos
+        <i class="breadcrumb-icon icon-base ti tabler-chevron-right align-middle icon-xs mx-2"></i>
       </li>
+      <li class="breadcrumb-item active">Residuos</li>
     </ol>
   </nav>
 
@@ -36,10 +38,10 @@
             <th>Clave</th>
             <th>Descripción</th>
             <th class="text-center">Estado físico</th>
-            <th class="text-center">Clasificación</th>
+            <th class="text-center">Etapa Manejo</th>
             <th class="text-center">Unidad</th>
             <th class="text-center">Precio Base</th>
-            <th class="text-center">Peligroso</th>
+            <th class="text-center">Tipo</th>
             <th class="text-center"><i class="ti tabler-settings ti-sm text-muted" style="font-size: 20px;"></i></th>
           </tr>
         </thead>
@@ -49,10 +51,10 @@
             <th>Clave</th>
             <th>Descripción</th>
             <th class="text-center">Estado físico</th>
-            <th class="text-center">Clasificación</th>
+            <th class="text-center">Etapa Manejo</th>
             <th class="text-center">Unidad</th>
             <th class="text-center">Precio Base</th>
-            <th class="text-center">Peligroso</th>
+            <th class="text-center">Tipo</th>
             <th class="text-center"><i class="ti tabler-settings ti-sm text-muted" style="font-size: 20px;"></i></th>
           </tr>
         </tfoot>
